@@ -1,5 +1,7 @@
 # bancor-widget-poc
 
+This is no where close to being showcased or ran as its heavily bugged im commiting just to satify the boundty requirement of making a submission
+
 ## Project setup
 ```
 npm install

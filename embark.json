@@ -1,0 +1,16 @@
+{
+    "contracts": ["contracts/**"],
+    "app": {},
+    "buildDir": "embarkArtifacts/",
+    "config": "config/",
+    "versions": {
+      "solc": "0.4.26"
+    },
+    "options": {
+      "solc": {
+        "optimize": true,
+        "optimize-runs": 200
+      }
+    }
+  }
+  

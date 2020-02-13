@@ -1,0 +1,31 @@
+{
+    "about":[
+        {
+            "text":"To earn from all trades, add liquidity to pools."
+        },
+        {
+            "text":"When you do this, you'll receive relay tokens"
+        },
+        {
+            "text":"For example, to earn from every trade of DAI, you can deposit both"
+        },
+        {
+            "text":"BNT and DAI."
+        },
+        {
+            "text":"You'll receive a relay token called DAIBNT for the DAI pool"
+        },
+        {
+            "text":"To get the deposit back, just return the DAIBNT."
+        },
+        {
+            "text":"When DAI is traded, a % of the conversion buys DAIBNT relay tokens. This increases the price of DAIBNT."
+        },
+        {
+            "text":"When DAI is traded, a % of the conversion buys DAIBNT relay tokens. This increases the price of DAIBNT."
+        },
+        {
+            "text":"More updates coming soon."
+        }
+    ]
+}
