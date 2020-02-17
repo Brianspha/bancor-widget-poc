@@ -1,7 +1,7 @@
 {
     "contracts": ["contracts/**"],
     "app": {},
-    "buildDir": "deployedArtifacts/",
+    "buildDir": "embarkArtifacts/",
     "config": "config/",
     "versions": {
       "solc": "0.4.26"
