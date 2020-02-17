@@ -1,0 +1,239 @@
+{
+  "logger": {
+    "events": {
+      "_events": {
+        "blockchain:started": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "outputDone": [
+          null,
+          null
+        ]
+      },
+      "_eventsCount": 124,
+      "_maxListeners": 350
+    },
+    "logLevels": [
+      "error",
+      "warn",
+      "info",
+      "debug",
+      "trace"
+    ],
+    "logLevel": "info",
+    "context": [
+      "run",
+      "build"
+    ]
+  },
+  "abiDefinition": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "newManager",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function",
+      "signature": "0x42906029"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "manager",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function",
+      "signature": "0x481c6a75"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "acceptOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function",
+      "signature": "0x79ba5097"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function",
+      "signature": "0x8da5cb5b"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "acceptManagement",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function",
+      "signature": "0xc8c2fe6c"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "newOwner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function",
+      "signature": "0xd4ee1d90"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_newManager",
+          "type": "address"
+        }
+      ],
+      "name": "transferManagement",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function",
+      "signature": "0xe4edf852"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function",
+      "signature": "0xf2fde38b"
+    },
+    {
+      "inputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor",
+      "signature": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_prevManager",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_newManager",
+          "type": "address"
+        }
+      ],
+      "name": "ManagerUpdate",
+      "type": "event",
+      "signature": "0xbe4cc281795971a471c980e842627a7f1ea3892ddfce8c5b6357cd2611c19732"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_prevOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "_newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnerUpdate",
+      "type": "event",
+      "signature": "0x343765429aea5a34b3ff6a3785a98a5abb2597aca87bfbb58632c173d585373a"
+    }
+  ],
+  "deployedAddress": "0x920ED95AD6507Ae84d11c40C18082e45BF761455",
+  "className": "Managed",
+  "args": [],
+  "gas": 321630,
+  "gasPrice": "20000000000",
+  "silent": false,
+  "track": true,
+  "deploy": true,
+  "realRuntimeBytecode": "60806040526004361061008d5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663429060298114610092578063481c6a75146100c357806379ba5097146100d85780638da5cb5b146100ef578063c8c2fe6c14610104578063d4ee1d9014610119578063e4edf8521461012e578063f2fde38b1461014f575b600080fd5b34801561009e57600080fd5b506100a7610170565b60408051600160a060020a039092168252519081900360200190f35b3480156100cf57600080fd5b506100a761017f565b3480156100e457600080fd5b506100ed61018e565b005b3480156100fb57600080fd5b506100a7610216565b34801561011057600080fd5b506100ed610225565b34801561012557600080fd5b506100a76102af565b34801561013a57600080fd5b506100ed600160a060020a03600435166102be565b34801561015b57600080fd5b506100ed600160a060020a0360043516610336565b600354600160a060020a031681565b600254600160a060020a031681565b600154600160a060020a031633146101a557600080fd5b60015460008054604051600160a060020a0393841693909116917f343765429aea5a34b3ff6a3785a98a5abb2597aca87bfbb58632c173d585373a91a3600180546000805473ffffffffffffffffffffffffffffffffffffffff19908116600160a060020a03841617909155169055565b600054600160a060020a031681565b600354600160a060020a0316331461023c57600080fd5b600354600254604051600160a060020a0392831692909116907fbe4cc281795971a471c980e842627a7f1ea3892ddfce8c5b6357cd2611c1973290600090a3600380546002805473ffffffffffffffffffffffffffffffffffffffff19908116600160a060020a03841617909155169055565b600154600160a060020a031681565b600054600160a060020a03163314806102e15750600254600160a060020a031633145b15156102ec57600080fd5b600254600160a060020a038281169116141561030757600080fd5b6003805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0392909216919091179055565b600054600160a060020a0316331461034d57600080fd5b600054600160a060020a038281169116141561036857600080fd5b6001805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a03929092169190911790555600a165627a7a72305820",
+  "realArgs": [],
+  "code": "608060405234801561001057600080fd5b506000805433600160a060020a031991821681178355600280549092161790556103c390819061004090396000f30060806040526004361061008d5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663429060298114610092578063481c6a75146100c357806379ba5097146100d85780638da5cb5b146100ef578063c8c2fe6c14610104578063d4ee1d9014610119578063e4edf8521461012e578063f2fde38b1461014f575b600080fd5b34801561009e57600080fd5b506100a7610170565b60408051600160a060020a039092168252519081900360200190f35b3480156100cf57600080fd5b506100a761017f565b3480156100e457600080fd5b506100ed61018e565b005b3480156100fb57600080fd5b506100a7610216565b34801561011057600080fd5b506100ed610225565b34801561012557600080fd5b506100a76102af565b34801561013a57600080fd5b506100ed600160a060020a03600435166102be565b34801561015b57600080fd5b506100ed600160a060020a0360043516610336565b600354600160a060020a031681565b600254600160a060020a031681565b600154600160a060020a031633146101a557600080fd5b60015460008054604051600160a060020a0393841693909116917f343765429aea5a34b3ff6a3785a98a5abb2597aca87bfbb58632c173d585373a91a3600180546000805473ffffffffffffffffffffffffffffffffffffffff19908116600160a060020a03841617909155169055565b600054600160a060020a031681565b600354600160a060020a0316331461023c57600080fd5b600354600254604051600160a060020a0392831692909116907fbe4cc281795971a471c980e842627a7f1ea3892ddfce8c5b6357cd2611c1973290600090a3600380546002805473ffffffffffffffffffffffffffffffffffffffff19908116600160a060020a03841617909155169055565b600154600160a060020a031681565b600054600160a060020a03163314806102e15750600254600160a060020a031633145b15156102ec57600080fd5b600254600160a060020a038281169116141561030757600080fd5b6003805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0392909216919091179055565b600054600160a060020a0316331461034d57600080fd5b600054600160a060020a038281169116141561036857600080fd5b6001805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a03929092169190911790555600a165627a7a72305820534194f8e0bb5886f62eaba8d15c9b3418b546883810b339247a4171347197490029",
+  "runtimeBytecode": "60806040526004361061008d5763ffffffff7c0100000000000000000000000000000000000000000000000000000000600035041663429060298114610092578063481c6a75146100c357806379ba5097146100d85780638da5cb5b146100ef578063c8c2fe6c14610104578063d4ee1d9014610119578063e4edf8521461012e578063f2fde38b1461014f575b600080fd5b34801561009e57600080fd5b506100a7610170565b60408051600160a060020a039092168252519081900360200190f35b3480156100cf57600080fd5b506100a761017f565b3480156100e457600080fd5b506100ed61018e565b005b3480156100fb57600080fd5b506100a7610216565b34801561011057600080fd5b506100ed610225565b34801561012557600080fd5b506100a76102af565b34801561013a57600080fd5b506100ed600160a060020a03600435166102be565b34801561015b57600080fd5b506100ed600160a060020a0360043516610336565b600354600160a060020a031681565b600254600160a060020a031681565b600154600160a060020a031633146101a557600080fd5b60015460008054604051600160a060020a0393841693909116917f343765429aea5a34b3ff6a3785a98a5abb2597aca87bfbb58632c173d585373a91a3600180546000805473ffffffffffffffffffffffffffffffffffffffff19908116600160a060020a03841617909155169055565b600054600160a060020a031681565b600354600160a060020a0316331461023c57600080fd5b600354600254604051600160a060020a0392831692909116907fbe4cc281795971a471c980e842627a7f1ea3892ddfce8c5b6357cd2611c1973290600090a3600380546002805473ffffffffffffffffffffffffffffffffffffffff19908116600160a060020a03841617909155169055565b600154600160a060020a031681565b600054600160a060020a03163314806102e15750600254600160a060020a031633145b15156102ec57600080fd5b600254600160a060020a038281169116141561030757600080fd5b6003805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0392909216919091179055565b600054600160a060020a0316331461034d57600080fd5b600054600160a060020a038281169116141561036857600080fd5b6001805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a03929092169190911790555600a165627a7a72305820534194f8e0bb5886f62eaba8d15c9b3418b546883810b339247a4171347197490029",
+  "linkReferences": {},
+  "swarmHash": "534194f8e0bb5886f62eaba8d15c9b3418b546883810b339247a417134719749",
+  "gasEstimates": {
+    "creation": {
+      "codeDepositCost": "192600",
+      "executionCost": "40766",
+      "totalCost": "233366"
+    },
+    "external": {
+      "acceptManagement()": "43055",
+      "acceptOwnership()": "43008",
+      "manager()": "559",
+      "newManager()": "537",
+      "newOwner()": "647",
+      "owner()": "603",
+      "transferManagement(address)": "21572",
+      "transferOwnership(address)": "21286"
+    }
+  },
+  "functionHashes": {
+    "acceptManagement()": "c8c2fe6c",
+    "acceptOwnership()": "79ba5097",
+    "manager()": "481c6a75",
+    "newManager()": "42906029",
+    "newOwner()": "d4ee1d90",
+    "owner()": "8da5cb5b",
+    "transferManagement(address)": "e4edf852",
+    "transferOwnership(address)": "f2fde38b"
+  },
+  "filename": "C:/Users/Development/Documents/GitHub/bancor-widget-poc/.embark/contracts/utility/Managed.sol",
+  "originalFilename": "contracts\\utility\\Managed.sol",
+  "path": "C:\\Users\\Development\\Documents\\GitHub\\bancor-widget-poc\\contracts\\utility\\Managed.sol",
+  "type": "file",
+  "deploymentAccount": "0x129132Cc44439ad175F72142aD8532bED8cf459F",
+  "transactionHash": "0x7f8e4f923209a5e23d75bfbce5d4af37cdb2d7cd777a0a728c29d7a2e174a727"
+}

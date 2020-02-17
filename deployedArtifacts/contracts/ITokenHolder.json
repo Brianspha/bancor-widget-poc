@@ -1,0 +1,122 @@
+{
+  "logger": {
+    "events": {
+      "_events": {
+        "blockchain:started": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "outputDone": [
+          null,
+          null
+        ]
+      },
+      "_eventsCount": 124,
+      "_maxListeners": 350
+    },
+    "logLevels": [
+      "error",
+      "warn",
+      "info",
+      "debug",
+      "trace"
+    ],
+    "logLevel": "info",
+    "context": [
+      "run",
+      "build"
+    ]
+  },
+  "abiDefinition": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_token",
+          "type": "address"
+        },
+        {
+          "name": "_to",
+          "type": "address"
+        },
+        {
+          "name": "_amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdrawTokens",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "acceptOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "className": "ITokenHolder",
+  "args": [],
+  "gas": "auto",
+  "silent": false,
+  "track": true,
+  "deploy": false,
+  "realRuntimeBytecode": "",
+  "realArgs": [],
+  "code": "",
+  "runtimeBytecode": "",
+  "linkReferences": {},
+  "swarmHash": "",
+  "gasEstimates": null,
+  "functionHashes": {
+    "acceptOwnership()": "79ba5097",
+    "owner()": "8da5cb5b",
+    "transferOwnership(address)": "f2fde38b",
+    "withdrawTokens(address,address,uint256)": "5e35359e"
+  },
+  "filename": "C:/Users/Development/Documents/GitHub/bancor-widget-poc/.embark/contracts/utility/interfaces/ITokenHolder.sol",
+  "originalFilename": "contracts\\utility\\interfaces\\ITokenHolder.sol",
+  "path": "C:\\Users\\Development\\Documents\\GitHub\\bancor-widget-poc\\contracts\\utility\\interfaces\\ITokenHolder.sol",
+  "type": "file",
+  "deploymentAccount": "0x129132Cc44439ad175F72142aD8532bED8cf459F"
+}

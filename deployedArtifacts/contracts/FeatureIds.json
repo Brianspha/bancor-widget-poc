@@ -1,0 +1,87 @@
+{
+  "logger": {
+    "events": {
+      "_events": {
+        "blockchain:started": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "outputDone": [
+          null,
+          null
+        ]
+      },
+      "_eventsCount": 124,
+      "_maxListeners": 350
+    },
+    "logLevels": [
+      "error",
+      "warn",
+      "info",
+      "debug",
+      "trace"
+    ],
+    "logLevel": "info",
+    "context": [
+      "run",
+      "build"
+    ]
+  },
+  "abiDefinition": [
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "CONVERTER_CONVERSION_WHITELIST",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function",
+      "signature": "0x92d1abb7"
+    }
+  ],
+  "deployedAddress": "0x8dE34d11Ab69b91079089827EAdE298D2031560A",
+  "className": "FeatureIds",
+  "args": [],
+  "gas": 90581,
+  "gasPrice": "20000000000",
+  "silent": false,
+  "track": true,
+  "deploy": true,
+  "realRuntimeBytecode": "608060405260043610603e5763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166392d1abb781146043575b600080fd5b348015604e57600080fd5b5060556067565b60408051918252519081900360200190f35b6001815600a165627a7a72305820",
+  "realArgs": [],
+  "code": "6080604052348015600f57600080fd5b5060988061001e6000396000f300608060405260043610603e5763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166392d1abb781146043575b600080fd5b348015604e57600080fd5b5060556067565b60408051918252519081900360200190f35b6001815600a165627a7a72305820ebbb2438876b42bd0d0c38f34c215b0687d1d7bd07b49b7fea3805f387fedefe0029",
+  "runtimeBytecode": "608060405260043610603e5763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166392d1abb781146043575b600080fd5b348015604e57600080fd5b5060556067565b60408051918252519081900360200190f35b6001815600a165627a7a72305820ebbb2438876b42bd0d0c38f34c215b0687d1d7bd07b49b7fea3805f387fedefe0029",
+  "linkReferences": {},
+  "swarmHash": "ebbb2438876b42bd0d0c38f34c215b0687d1d7bd07b49b7fea3805f387fedefe",
+  "gasEstimates": {
+    "creation": {
+      "codeDepositCost": "30400",
+      "executionCost": "81",
+      "totalCost": "30481"
+    },
+    "external": {
+      "CONVERTER_CONVERSION_WHITELIST()": "184"
+    }
+  },
+  "functionHashes": {
+    "CONVERTER_CONVERSION_WHITELIST()": "92d1abb7"
+  },
+  "filename": "C:/Users/Development/Documents/GitHub/bancor-widget-poc/.embark/contracts/FeatureIds.sol",
+  "originalFilename": "contracts\\FeatureIds.sol",
+  "path": "C:\\Users\\Development\\Documents\\GitHub\\bancor-widget-poc\\contracts\\FeatureIds.sol",
+  "type": "file",
+  "deploymentAccount": "0x129132Cc44439ad175F72142aD8532bED8cf459F",
+  "transactionHash": "0xe563326b174ffc479f8cc4d3ed64b5bd1618942a790fbf4c11cddc976ff45c0f"
+}

@@ -1,0 +1,160 @@
+{
+  "logger": {
+    "events": {
+      "_events": {
+        "blockchain:started": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "outputDone": [
+          null,
+          null
+        ]
+      },
+      "_eventsCount": 124,
+      "_maxListeners": 350
+    },
+    "logLevels": [
+      "error",
+      "warn",
+      "info",
+      "debug",
+      "trace"
+    ],
+    "logLevel": "info",
+    "context": [
+      "run",
+      "build"
+    ]
+  },
+  "abiDefinition": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_features",
+          "type": "uint256"
+        },
+        {
+          "name": "_enable",
+          "type": "bool"
+        }
+      ],
+      "name": "enableFeatures",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function",
+      "signature": "0x2c7077c0"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_contract",
+          "type": "address"
+        },
+        {
+          "name": "_features",
+          "type": "uint256"
+        }
+      ],
+      "name": "isSupported",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function",
+      "signature": "0xa5fbf287"
+    },
+    {
+      "inputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor",
+      "signature": "constructor"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_address",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_features",
+          "type": "uint256"
+        }
+      ],
+      "name": "FeaturesAddition",
+      "type": "event",
+      "signature": "0x461f0180592d0fa11ece082775c5b037a96f6a5418f3f23d4ee4ee063b5c1aac"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "_address",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "name": "_features",
+          "type": "uint256"
+        }
+      ],
+      "name": "FeaturesRemoval",
+      "type": "event",
+      "signature": "0x903f96a6f8c316bb88b30f8b641bd2aa80b6e92732bab4d1accf30e1d6eba89c"
+    }
+  ],
+  "deployedAddress": "0x62AD5772337ef4aD3598814ceb9FCEa0CA0d9A58",
+  "className": "ContractFeatures",
+  "args": [],
+  "gas": 168111,
+  "gasPrice": "20000000000",
+  "silent": false,
+  "track": true,
+  "deploy": true,
+  "realRuntimeBytecode": "60806040526004361061004b5763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416632c7077c08114610050578063a5fbf2871461006f575b600080fd5b34801561005c57600080fd5b5061006d60043560243515156100b4565b005b34801561007b57600080fd5b506100a073ffffffffffffffffffffffffffffffffffffffff6004351660243561017e565b604080519115158252519081900360200190f35b801561011b576100c4338361017e565b156100ce5761017a565b3360008181526020818152604091829020805486179055815185815291517f461f0180592d0fa11ece082775c5b037a96f6a5418f3f23d4ee4ee063b5c1aac9281900390910190a261017a565b610125338361017e565b15156101305761017a565b336000818152602081815260409182902080548619169055815185815291517f903f96a6f8c316bb88b30f8b641bd2aa80b6e92732bab4d1accf30e1d6eba89c9281900390910190a25b5050565b73ffffffffffffffffffffffffffffffffffffffff91909116600090815260208190526040902054811614905600a165627a7a72305820",
+  "realArgs": [],
+  "code": "608060405234801561001057600080fd5b506101d8806100206000396000f30060806040526004361061004b5763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416632c7077c08114610050578063a5fbf2871461006f575b600080fd5b34801561005c57600080fd5b5061006d60043560243515156100b4565b005b34801561007b57600080fd5b506100a073ffffffffffffffffffffffffffffffffffffffff6004351660243561017e565b604080519115158252519081900360200190f35b801561011b576100c4338361017e565b156100ce5761017a565b3360008181526020818152604091829020805486179055815185815291517f461f0180592d0fa11ece082775c5b037a96f6a5418f3f23d4ee4ee063b5c1aac9281900390910190a261017a565b610125338361017e565b15156101305761017a565b336000818152602081815260409182902080548619169055815185815291517f903f96a6f8c316bb88b30f8b641bd2aa80b6e92732bab4d1accf30e1d6eba89c9281900390910190a25b5050565b73ffffffffffffffffffffffffffffffffffffffff91909116600090815260208190526040902054811614905600a165627a7a723058209bc11f80a9e603ce6da08cf60bed3592bc3d023e8807b879f6077857757201410029",
+  "runtimeBytecode": "60806040526004361061004b5763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416632c7077c08114610050578063a5fbf2871461006f575b600080fd5b34801561005c57600080fd5b5061006d60043560243515156100b4565b005b34801561007b57600080fd5b506100a073ffffffffffffffffffffffffffffffffffffffff6004351660243561017e565b604080519115158252519081900360200190f35b801561011b576100c4338361017e565b156100ce5761017a565b3360008181526020818152604091829020805486179055815185815291517f461f0180592d0fa11ece082775c5b037a96f6a5418f3f23d4ee4ee063b5c1aac9281900390910190a261017a565b610125338361017e565b15156101305761017a565b336000818152602081815260409182902080548619169055815185815291517f903f96a6f8c316bb88b30f8b641bd2aa80b6e92732bab4d1accf30e1d6eba89c9281900390910190a25b5050565b73ffffffffffffffffffffffffffffffffffffffff91909116600090815260208190526040902054811614905600a165627a7a723058209bc11f80a9e603ce6da08cf60bed3592bc3d023e8807b879f6077857757201410029",
+  "linkReferences": {},
+  "swarmHash": "9bc11f80a9e603ce6da08cf60bed3592bc3d023e8807b879f607785775720141",
+  "gasEstimates": {
+    "creation": {
+      "codeDepositCost": "94400",
+      "executionCost": "141",
+      "totalCost": "94541"
+    },
+    "external": {
+      "enableFeatures(uint256,bool)": "22255",
+      "isSupported(address,uint256)": "523"
+    }
+  },
+  "functionHashes": {
+    "enableFeatures(uint256,bool)": "2c7077c0",
+    "isSupported(address,uint256)": "a5fbf287"
+  },
+  "filename": "C:/Users/Development/Documents/GitHub/bancor-widget-poc/.embark/contracts/utility/ContractFeatures.sol",
+  "originalFilename": "contracts\\utility\\ContractFeatures.sol",
+  "path": "C:\\Users\\Development\\Documents\\GitHub\\bancor-widget-poc\\contracts\\utility\\ContractFeatures.sol",
+  "type": "file",
+  "deploymentAccount": "0x129132Cc44439ad175F72142aD8532bED8cf459F",
+  "transactionHash": "0xdb9e6098364c2ad68991f0c496acfc581059b439a35b510bcaf6b804184d2688"
+}

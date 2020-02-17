@@ -66,6 +66,11 @@ module.exports = {
                     'SphaToken', 'ST', 18, 2000000000
                 ]
             },
+            ERC20Token2: {
+                args: [
+                    'Reserve Token', 'RT', 18, 4000000000
+                ]
+            },
             XTransferRerouter: {
                 args: [true]
             },
@@ -76,7 +81,25 @@ module.exports = {
                     5000,
                     "$ERC20Token",
                     25000
-                ]
+                ],
+                afterDeploy:async(dependencies)=>{
+                    console.log(dependencies)
+                    await dependencies.contracts.methods.ContractRegistry.registerAddress(web3.utils.fromAscii(ContractFeatures), dependencies.contracts.ContractFeatures.address).send({
+                        gas: 6000000
+                    })
+                    await dependencies.contracts.methods.ContractRegistry.registerAddress(web3.utils.fromAscii(BancorFormula), dependencies.contracts.BancorFormula.address).send({
+                        gas: 6000000
+                    })
+                    await dependencies.contracts.methods.ContractRegistry.registerAddress(web3.utils.fromAscii(BancorNetwork), dependencies.contracts.BancorNetwork.address).send({
+                        gas: 6000000
+                    })
+                    await dependencies.contracts.methods.ContractRegistry.registerAddress(web3.utils.fromAscii(BancorConverterFactory), dependencies.contracts.BancorConverterFactory.address).send({
+                        gas: 6000000
+                    })
+                    await dependencies.contracts.methods.ContractRegistry.registerAddress(web3.utils.fromAscii(BancorConverterUpgrader), dependencies.contracts.BancorConverterUpgrader.address).send({
+                        gas: 6000000
+                    })
+                }
             },
             BancorConverterRegistry: {
                 args: [

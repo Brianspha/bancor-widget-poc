@@ -1,0 +1,527 @@
+{
+  "logger": {
+    "events": {
+      "_events": {
+        "blockchain:started": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "outputDone": [
+          null,
+          null
+        ]
+      },
+      "_eventsCount": 124,
+      "_maxListeners": 350
+    },
+    "logLevels": [
+      "error",
+      "warn",
+      "info",
+      "debug",
+      "trace"
+    ],
+    "logLevel": "info",
+    "context": [
+      "run",
+      "build"
+    ]
+  },
+  "abiDefinition": [
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_path",
+          "type": "address[]"
+        },
+        {
+          "name": "_amount",
+          "type": "uint256"
+        },
+        {
+          "name": "_minReturn",
+          "type": "uint256"
+        },
+        {
+          "name": "_for",
+          "type": "address"
+        },
+        {
+          "name": "_block",
+          "type": "uint256"
+        },
+        {
+          "name": "_nonce",
+          "type": "uint256"
+        },
+        {
+          "name": "_v",
+          "type": "uint8"
+        },
+        {
+          "name": "_r",
+          "type": "bytes32"
+        },
+        {
+          "name": "_s",
+          "type": "bytes32"
+        }
+      ],
+      "name": "convertForPrioritized",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_path",
+          "type": "address[]"
+        },
+        {
+          "name": "_amount",
+          "type": "uint256"
+        },
+        {
+          "name": "_minReturn",
+          "type": "uint256"
+        },
+        {
+          "name": "_for",
+          "type": "address"
+        },
+        {
+          "name": "_affiliateAccount",
+          "type": "address"
+        },
+        {
+          "name": "_affiliateFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "claimAndConvertFor2",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_path",
+          "type": "address[]"
+        },
+        {
+          "name": "_amount",
+          "type": "uint256"
+        },
+        {
+          "name": "_minReturn",
+          "type": "uint256"
+        },
+        {
+          "name": "_for",
+          "type": "address"
+        },
+        {
+          "name": "_signature",
+          "type": "uint256[]"
+        },
+        {
+          "name": "_affiliateAccount",
+          "type": "address"
+        },
+        {
+          "name": "_affiliateFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "convertForPrioritized4",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_path",
+          "type": "address[]"
+        },
+        {
+          "name": "_amount",
+          "type": "uint256"
+        },
+        {
+          "name": "_minReturn",
+          "type": "uint256"
+        },
+        {
+          "name": "_affiliateAccount",
+          "type": "address"
+        },
+        {
+          "name": "_affiliateFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "convert2",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_path",
+          "type": "address[]"
+        },
+        {
+          "name": "_amount",
+          "type": "uint256"
+        },
+        {
+          "name": "_minReturn",
+          "type": "uint256"
+        },
+        {
+          "name": "_for",
+          "type": "address"
+        },
+        {
+          "name": "_block",
+          "type": "uint256"
+        },
+        {
+          "name": "_v",
+          "type": "uint8"
+        },
+        {
+          "name": "_r",
+          "type": "bytes32"
+        },
+        {
+          "name": "_s",
+          "type": "bytes32"
+        }
+      ],
+      "name": "convertForPrioritized2",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_path",
+          "type": "address[]"
+        },
+        {
+          "name": "_amount",
+          "type": "uint256"
+        },
+        {
+          "name": "_minReturn",
+          "type": "uint256"
+        },
+        {
+          "name": "_for",
+          "type": "address"
+        },
+        {
+          "name": "_affiliateAccount",
+          "type": "address"
+        },
+        {
+          "name": "_affiliateFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "convertFor2",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_path",
+          "type": "address[]"
+        },
+        {
+          "name": "_amount",
+          "type": "uint256"
+        },
+        {
+          "name": "_minReturn",
+          "type": "uint256"
+        },
+        {
+          "name": "_for",
+          "type": "address"
+        }
+      ],
+      "name": "claimAndConvertFor",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_path",
+          "type": "address[]"
+        },
+        {
+          "name": "_amount",
+          "type": "uint256"
+        },
+        {
+          "name": "_minReturn",
+          "type": "uint256"
+        },
+        {
+          "name": "_for",
+          "type": "address"
+        },
+        {
+          "name": "_customVal",
+          "type": "uint256"
+        },
+        {
+          "name": "_block",
+          "type": "uint256"
+        },
+        {
+          "name": "_v",
+          "type": "uint8"
+        },
+        {
+          "name": "_r",
+          "type": "bytes32"
+        },
+        {
+          "name": "_s",
+          "type": "bytes32"
+        }
+      ],
+      "name": "convertForPrioritized3",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_path",
+          "type": "address[]"
+        },
+        {
+          "name": "_amount",
+          "type": "uint256"
+        },
+        {
+          "name": "_minReturn",
+          "type": "uint256"
+        }
+      ],
+      "name": "claimAndConvert",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_path",
+          "type": "address[]"
+        },
+        {
+          "name": "_amount",
+          "type": "uint256"
+        },
+        {
+          "name": "_minReturn",
+          "type": "uint256"
+        },
+        {
+          "name": "_for",
+          "type": "address"
+        }
+      ],
+      "name": "convertFor",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_path",
+          "type": "address[]"
+        },
+        {
+          "name": "_amount",
+          "type": "uint256"
+        },
+        {
+          "name": "_minReturn",
+          "type": "uint256"
+        },
+        {
+          "name": "_affiliateAccount",
+          "type": "address"
+        },
+        {
+          "name": "_affiliateFee",
+          "type": "uint256"
+        }
+      ],
+      "name": "claimAndConvert2",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_path",
+          "type": "address[]"
+        },
+        {
+          "name": "_amount",
+          "type": "uint256"
+        },
+        {
+          "name": "_minReturn",
+          "type": "uint256"
+        }
+      ],
+      "name": "convert",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    }
+  ],
+  "className": "IBancorNetwork",
+  "args": [],
+  "gas": "auto",
+  "silent": false,
+  "track": true,
+  "deploy": false,
+  "realRuntimeBytecode": "",
+  "realArgs": [],
+  "code": "",
+  "runtimeBytecode": "",
+  "linkReferences": {},
+  "swarmHash": "",
+  "gasEstimates": null,
+  "functionHashes": {
+    "claimAndConvert(address[],uint256,uint256)": "c7ba24bc",
+    "claimAndConvert2(address[],uint256,uint256,address,uint256)": "e57738e5",
+    "claimAndConvertFor(address[],uint256,uint256,address)": "b1e9932b",
+    "claimAndConvertFor2(address[],uint256,uint256,address,address,uint256)": "2978c10e",
+    "convert(address[],uint256,uint256)": "f3898a97",
+    "convert2(address[],uint256,uint256,address,uint256)": "569706eb",
+    "convertFor(address[],uint256,uint256,address)": "c98fefed",
+    "convertFor2(address[],uint256,uint256,address,address,uint256)": "ab6214ce",
+    "convertForPrioritized(address[],uint256,uint256,address,uint256,uint256,uint8,bytes32,bytes32)": "1134269a",
+    "convertForPrioritized2(address[],uint256,uint256,address,uint256,uint8,bytes32,bytes32)": "6b08f2ef",
+    "convertForPrioritized3(address[],uint256,uint256,address,uint256,uint256,uint8,bytes32,bytes32)": "b406d386",
+    "convertForPrioritized4(address[],uint256,uint256,address,uint256[],address,uint256)": "4de006cb"
+  },
+  "filename": "C:/Users/Development/Documents/GitHub/bancor-widget-poc/.embark/contracts/IBancorNetwork.sol",
+  "originalFilename": "contracts\\IBancorNetwork.sol",
+  "path": "C:\\Users\\Development\\Documents\\GitHub\\bancor-widget-poc\\contracts\\IBancorNetwork.sol",
+  "type": "file",
+  "deploymentAccount": "0x129132Cc44439ad175F72142aD8532bED8cf459F"
+}

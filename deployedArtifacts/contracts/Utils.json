@@ -1,0 +1,74 @@
+{
+  "logger": {
+    "events": {
+      "_events": {
+        "blockchain:started": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "outputDone": [
+          null,
+          null
+        ]
+      },
+      "_eventsCount": 124,
+      "_maxListeners": 350
+    },
+    "logLevels": [
+      "error",
+      "warn",
+      "info",
+      "debug",
+      "trace"
+    ],
+    "logLevel": "info",
+    "context": [
+      "run",
+      "build"
+    ]
+  },
+  "abiDefinition": [
+    {
+      "inputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor",
+      "signature": "constructor"
+    }
+  ],
+  "deployedAddress": "0xEF8801e79Dd7acA4C64C670B3c36285cbE6a8850",
+  "className": "Utils",
+  "args": [],
+  "gas": 70359,
+  "gasPrice": "20000000000",
+  "silent": false,
+  "track": true,
+  "deploy": true,
+  "realRuntimeBytecode": "6080604052600080fd00a165627a7a72305820",
+  "realArgs": [],
+  "code": "6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a72305820bbd92fc4ad65434d69b9a7673e251b28676352a8dae2c37f4620addcb01830620029",
+  "runtimeBytecode": "6080604052600080fd00a165627a7a72305820bbd92fc4ad65434d69b9a7673e251b28676352a8dae2c37f4620addcb01830620029",
+  "linkReferences": {},
+  "swarmHash": "bbd92fc4ad65434d69b9a7673e251b28676352a8dae2c37f4620addcb0183062",
+  "gasEstimates": {
+    "creation": {
+      "codeDepositCost": "10600",
+      "executionCost": "66",
+      "totalCost": "10666"
+    }
+  },
+  "functionHashes": {},
+  "filename": "C:/Users/Development/Documents/GitHub/bancor-widget-poc/.embark/contracts/utility/Utils.sol",
+  "originalFilename": "contracts\\utility\\Utils.sol",
+  "path": "C:\\Users\\Development\\Documents\\GitHub\\bancor-widget-poc\\contracts\\utility\\Utils.sol",
+  "type": "file",
+  "deploymentAccount": "0x129132Cc44439ad175F72142aD8532bED8cf459F",
+  "transactionHash": "0xb5b79e74e16ad83c8e0c1790d93f5c9ac08039d0faa553199b7eb2bd049f0e81"
+}

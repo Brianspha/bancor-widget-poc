@@ -14,6 +14,7 @@
     "bignumber.js": "^9.0.0",
     "core-js": "^3.4.4",
     "document-register-element": "^1.11.0",
+    "embark-remix": "0.0.2",
     "embarkjs": "^5.1.1",
     "embarkjs-web3": "^5.1.1",
     "lodash": "^4.17.13",
@@ -27,6 +28,8 @@
     "vue-text-highlight": "^2.0.10",
     "vuetify": "^2.1.0",
     "vuex": "^3.0.1",
+    "web3": "^1.2.6",
+    "web3-utils": "^1.2.6",
     "webpack": "^4.16.1"
   },
   "devDependencies": {

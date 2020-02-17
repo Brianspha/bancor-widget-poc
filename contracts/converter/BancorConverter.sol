@@ -296,8 +296,7 @@ contract BancorConverter is IBancorConverter, SmartTokenController, Managed, Con
         notThis(_token)
         validReserveRatio(_ratio)
     {
-        require(_token != token && !reserves[_token].isSet && totalReserveRatio + _ratio <= RATIO_RESOLUTION); // validate input
-
+        require(_token != token && !reserves[_token].isSet && totalReserveRatio + _ratio <= RATIO_RESOLUTION); // validate inpu
         reserves[_token].ratio = _ratio;
         reserves[_token].isVirtualBalanceEnabled = false;
         reserves[_token].virtualBalance = 0;
