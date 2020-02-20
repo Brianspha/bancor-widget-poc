@@ -24,7 +24,6 @@
                     Name: AAA Smart Relay Token <br />
                     Symbol: AAABNT <br />
                     Decimals: Your Decimals <br />
-                    Relay tokens are a bridge between your token and the Bancor BNT trade network
                 </v-card-text>
             </v-card>
             <v-form ref="form" v-model="validTokenAddress" lazy-validation>
@@ -200,7 +199,14 @@ export default {
             converterTransfer: '',
             bntTransfer: '',
             initialPrice: 0,
-            totalBNT: 0
+            totalBNT: 0,
+            connectorAddress: ''
+        }
+    },
+    watch: {
+        selectedPrefix: function (val) {
+            console.log('selection connector type: ', val)
+            this.connectorAddress = val === 'USDB' ? this.$store.state.usdbAddress : this.$store.state.bntAddress
         }
     },
     mounted() {
@@ -260,62 +266,68 @@ export default {
                 var results = await Promise.resolve(this.deployERC20Token())
                 var tokenName = utils.toHex(results.name)
                 let This = this
-                this.$store.state.tokenRegistry.methods.addressOf(tokenName).call({
+                var config1 = await Promise.resolve(this.checkIfTokenRegistered([this.tokenAddress, this.connectorAddress], [500000, 500000]))
+                var config2 = await Promise.resolve(this.checkIfTokenRegistered([this.connectorAddress, this.tokenAddress], [500000, 500000]))
+                var config3 = await Promise.resolve(this.checkIfTokenRegistered([this.tokenAddress, this.connectorAddress], [300000, 300000]))
+                var config4 = await Promise.resolve(this.checkIfTokenRegistered([this.connectorAddress, this.tokenAddress], [300000, 300000]))
+                if (config1 || config2 || config3 || config4) {
+                    This.error("This Token is already registered on the bancor network")
+                    This.isLoading = false
+                } else {
+                    if (results.success) {
+                        var smartToken = new this.$store.state.web3.eth.Contract(require('../../json/smartToken.json'))
+                        var newToken = {
+                            "name": results.name + " Smart Relay Token",
+                            "symbol": results.symbol + this.selectedPrefix,
+                            "decimals": results.decimals
+                        }
+                        console.log('newToken: ', newToken)
+                        console.log('smartToken: ', smartToken)
+                        console.log('this.$store.state.smartTokenByteCode: ', this.$store.state.smartTokenByteCode)
+                        smartToken.deploy({
+                                data: this.$store.state.smartTokenByteCode,
+                                arguments: [newToken.name, newToken.symbol, newToken.decimals]
+                            })
+                            .send({
+                                from: this.$store.state.web3.eth.defaultAccount,
+                                gas: this.$store.state.currentGas
+                            }).then((contract, error) => {
+                                console.log('error: ', error)
+                                console.log('receipt: ', contract)
+                                if (contract) {
+                                    This.$store.state.deployedRelayTokenData = {
+                                        "symbol": results.symbol,
+                                        "decimals": results.decimals,
+                                        "name": results.name + "Smart Relay Token",
+                                        "token": contract,
+                                        "address": contract._address,
+                                        "relaySymbol": results.symbol + this.selectedPrefix
+                                    }
+                                    this.e6++
+                                }
+                                This.isLoading = false
+                            }).catch((error) => {
+                                This.isLoading = false
+                                console.error('errror: ', error)
+                            })
+                    }
+                }
+            }
+        },
+        checkIfTokenRegistered(config) {
+            this.isLoading = true
+            console.log('config: ', config)
+            return new Promise((resolve, reject) => {
+                this.$store.state.bancorRegistry.methods.getLiquidityPoolByReserveConfig(config).call({
                     gas: 8000000
                 }).then(async (address, error) => {
-                    if (error) {
-                        this.error("Something went wrong please try again")
-                        this.isLoading = false
-                    } else {
-                        if (address !== '0x0000000000000000000000000000000000000000') {
-                            This.error("This Token is already registered on the bancor network")
-                            This.isLoading = false
-                        } else {
-                            if (results.success) {
-                                var smartToken = new this.$store.state.web3.eth.Contract(require('../../json/smartToken.json'))
-                                var newToken = {
-                                    "name": results.name + " Smart Relay Token",
-                                    "symbol": results.symbol + this.selectedPrefix,
-                                    "decimals": results.decimals
-                                }
-                                console.log('newToken: ', newToken)
-                                console.log('smartToken: ', smartToken)
-                                console.log('this.$store.state.smartTokenByteCode: ', this.$store.state.smartTokenByteCode)
-                                smartToken.deploy({
-                                        data: this.$store.state.smartTokenByteCode,
-                                        arguments: [newToken.name, newToken.symbol, newToken.decimals]
-                                    })
-                                    .send({
-                                        from: this.$store.state.web3.eth.defaultAccount,
-                                        gas: this.$store.state.currentGas
-                                    }).then((contract, error) => {
-                                        console.log('error: ', error)
-                                        console.log('receipt: ', contract)
-                                        if (contract) {
-                                            This.$store.state.deployedRelayTokenData = {
-                                                "symbol": results.symbol,
-                                                "decimals": results.decimals,
-                                                "name": results.name + "Smart Relay Token",
-                                                "token": contract,
-                                                "address": contract._address,
-                                                "relaySymbol": results.symbol + this.selectedPrefix
-                                            }
-                                            this.e6++
-                                        }
-                                        This.isLoading = false
-                                    }).catch((error) => {
-                                        This.isLoading = false
-                                        console.error('errror: ', error)
-                                    })
-                            }
-                        }
-                    }
+                    resolve(address !== '0x0000000000000000000000000000000000000000')
                 }).catch((error) => {
-                    this.isLoading = false
-                    console.error("Something went wrong: ", error)
-                    this.error('Something went wrong')
+                    console.erro('error: ', error)
+                    resolve(false)
                 })
-            }
+            })
+
         },
         deployConverter: async function () {
             var abi = this.$store.state.converterData

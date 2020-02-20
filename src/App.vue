@@ -5,24 +5,24 @@
     <v-content>
         <!-- Provides the application the proper gutter -->
         <v-container fluid>
-            <v-btn absolute dark fab bottom right :color="$root.buttonColor?$root.buttonColor:$store.state.defualtColor" @click="showWarning">
-                <v-icon :v-model="$root.defualtIcon?$root.buttonIcon:$store.state.defualtIcon">{{$root.buttonColor?$root.buttonIcon:$store.state.defualtIcon}}</v-icon>
+            <v-btn absolute dark fab bottom right :color="$root.buttoncolor?$root.buttoncolor:$store.state.defualtColor" @click="showMenu=!showMenu">
+                <v-icon :v-model="$root.buttonicon?$root.buttonicon:$store.state.defualtIcon">{{$root.buttonicon?$root.buttonicon:$store.state.defualtIcon}}</v-icon>
             </v-btn>
             <!-- If using vue-router -->
             <v-dialog v-model="showMenu" fullscreen hide-overlay transition="dialog-bottom-transition">
                 <v-card>
-                    <v-toolbar dark :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">
+                    <v-toolbar dark :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">
                         <v-btn icon dark @click="showMenu = false">
                             <v-icon>mdi-close</v-icon>
                         </v-btn>
-                        <v-toolbar-title :v-model="$root.title? $root.title:appTitle" v-ripple>{{ $root.title? $root.title:appTitle }}</v-toolbar-title>
+                        {{appTitle}}
                         <v-spacer></v-spacer>
                         <v-toolbar-items>
                             <v-btn dark text @click="showMenu = false">Close</v-btn>
                         </v-toolbar-items>
                     </v-toolbar>
                     <v-card-text>
-                        <v-tabs v-model="selectedTab" background-color="white" :color="$root.tabsColor?$root.tabsColor:$store.state.defualtColor" right>
+                        <v-tabs v-model="selectedTab" background-color="white" :color="$root.widgetcolor?$root.widgetcolor:$store.state.defualtColor" right>
                             <v-tab v-for="(tab,i) in tabs" :key="i" :to="tab.to">{{tab.title}}</v-tab>
                         </v-tabs>
                         <v-tabs-items v-model="selectedTab">
@@ -38,14 +38,13 @@
     <v-footer app>
         <!-- -->
     </v-footer>
-
 </v-app>
 </template>
 
 <script>
 import swal from 'sweetalert2'
 export default {
-    props: ['title'],
+    props: ['widgetcolor', 'buttoncolor', 'buttonicon'],
     data() {
         return {
             activeTab: '',
@@ -67,11 +66,11 @@ export default {
                 }
             ],
             collapseOnScroll: true,
-            buttonColor: "blue",
             showMenu: false
         }
     },
     mounted() {
+        console.log('$root.buttoncolor: ', this.$root.buttoncolor)
         this.selectedTab = this.$route.name
         console.log('mounted: ', this.activeTab)
         var tokensNames = require('./json/tokens.json').data.page
@@ -87,19 +86,13 @@ export default {
         console.log(this.$store.state.tokens)
     },
     methods: {
-        switchTab(tab) {
-            console.log('tab: ', tab)
-            this.$router.push({
-                name: tab
-            })
-        },
         showWarning() {
             this.warning(`Attention: this application uses local storage for storing parameters. Please do not delete your browser history before completing all steps. Please do not proceed to the next step until your current transaction is confirmed in your wallet. Please do not speed up transactions after confirming them in your wallet.`)
             this.showMenu = !this.showMenu
         },
         warning(message) {
             swal.fire({
-                icon: 'warn',
+                icon: 'warning',
                 title: 'Caution',
                 text: message
             })

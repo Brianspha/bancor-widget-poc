@@ -62,14 +62,17 @@ module.exports = {
                 ]
             },
             ERC20Token: {
+                deploy: false,
+            },
+            USDB: {
+                instanceof:'ERC20Token',
                 args: [
-                    'SphaToken', 'ST', 18, 2000000000
+                    'Bancor USD Token','USDB',  18993213635516837
                 ]
             },
-            ERC20Token2: {
-                args: [
-                    'Reserve Token', 'RT', 18, 4000000000
-                ]
+            BNT:{
+                instanceof:'ERC20Token',
+                args:['Bancor','BNT',18691486415634976]
             },
             XTransferRerouter: {
                 args: [true]
