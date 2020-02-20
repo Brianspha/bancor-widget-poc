@@ -1,8 +1,21 @@
 <template>
 <v-container>
     <v-stepper v-model="e6" vertical>
-        <v-stepper-step :complete="e6 > 1" step="1" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">Create Relay Token (aka SmartToken)</v-stepper-step>
+        <v-stepper-step :complete="e6 > 1" step="1" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">Connector Selection</v-stepper-step>
         <v-stepper-content step="1" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">
+            <v-card flat>
+                <v-card-text style="color:black;font-weight: bold; white-space: pre-line;">
+                    Do you want <a href="#">BNT</a>or <a href="#">USDB</a> as the reserve liquidity of your new token exchange?
+                </v-card-text>
+            </v-card>
+            <v-form ref="form" v-model="validTokenAddress" lazy-validation>
+                <v-select :items="tokenPrefixes" v-model="selectedPrefix" filled label="Connector Type"></v-select>
+            </v-form>
+            <v-btn :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor" @click="selectTokenPrefix">Continue</v-btn>
+        </v-stepper-content>
+
+        <v-stepper-step :complete="e6 > 2" step="2" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">Create Relay Token (aka SmartToken)</v-stepper-step>
+        <v-stepper-content step="2" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">
             <v-card flat>
                 <v-card-text style="color:black;font-weight: bold; white-space: pre-line;">
                     If your token is called AAA, a relay token called AAABNT will be created.
@@ -10,7 +23,8 @@
                     The results of creating the token will be as follows <br />
                     Name: AAA Smart Relay Token <br />
                     Symbol: AAABNT <br />
-                    Decimals: Your Decimals
+                    Decimals: Your Decimals <br />
+                    Relay tokens are a bridge between your token and the Bancor BNT trade network
                 </v-card-text>
             </v-card>
             <v-form ref="form" v-model="validTokenAddress" lazy-validation>
@@ -18,9 +32,9 @@
             </v-form>
             <v-btn :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor" @click="validateTokenAddress">Continue</v-btn>
         </v-stepper-content>
-        <v-stepper-step :complete="e6 > 2" step="2" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">Converter Deployment
+        <v-stepper-step :complete="e6 > 3" step="3" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">Converter Deployment
         </v-stepper-step>
-        <v-stepper-content step="2" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">
+        <v-stepper-content step="3" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">
             <v-card class="mb-12">
                 <v-card-text style="color:black;font-weight: bold; white-space: pre-line;">
                     Smart token address from previous step,<br /> Bancor registry contract address,<br /> Max Fee: 30000 (3%),<br /> Weight: 500,000 (50%)
@@ -35,8 +49,8 @@
             </v-card>
             <v-btn :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor" @click="deployConverter">Continue</v-btn>
         </v-stepper-content>
-        <v-stepper-step :complete="e6 > 3" step="3" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">Set Conversion Fee</v-stepper-step>
-        <v-stepper-content step="3" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">
+        <v-stepper-step :complete="e6 > 4" step="4" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">Set Conversion Fee</v-stepper-step>
+        <v-stepper-content step="4" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">
             <v-card style="color:black;font-weight: bold; white-space: pre-line;" class="mb-12">
                 <v-card-text style="color:black;font-weight: bold; white-space: pre-line;">
                     This step invloves the following <br />
@@ -44,25 +58,62 @@
                 </v-card-text>
             </v-card>
             <v-form ref="form">
-                <v-text-field label="Conversion Fee" v-model="initialFee" :rules="numberRules" type="number"></v-text-field>
+                <v-text-field label="Conversion Fee" min="1000" max="100000" v-model="initialFee" hint="1000= (0.1%)" :rules="conversionFeeRules" type="number"></v-text-field>
             </v-form>
             <v-btn :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor" @click="setConversionFee">Continue</v-btn>
         </v-stepper-content>
-        <v-stepper-step :complete="e6 > 4" step="4" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">Funding & Initial Supply</v-stepper-step>
-        <v-stepper-content step="4" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">
+        <v-stepper-step :complete="e6 > 5" step="5" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">Initial Supply</v-stepper-step>
+        <v-stepper-content step="5" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">
             <v-card style="color:black;font-weight: bold; white-space: pre-line;" class="mb-12">
                 <v-card-text style="color:black;font-weight: bold; white-space: pre-line;">
                     This step invloves the following <br />
                     - Setting the Initial Suply for the liquidity Pool <br />
+                    - Setting the the Initial Price for the token {{selectedPrefix}} <br />
+                    - Setting the conversion between {{selectedPrefix}} amount for 1 {{$store.state.deployedRelayTokenData.symbol}}
                 </v-card-text>
             </v-card>
             <v-form ref="form">
-                <v-text-field label="Token Amount" hint="Token initial supply the liquidity pool" v-model="tokenIssueAmount" :rules="numberRules" type="number"></v-text-field>
+                <v-text-field label="Initial Supply" hint="Token initial supply the liquidity pool" v-model="totalTokenIssue" :rules="numberRules" type="number"></v-text-field>
+                <v-text-field label="Initial Price" :placeholder="`Enter {{selectedPrefix}} amount for 1 {{$store.state.deployedRelayTokenData.symbol}}`" hint="Amount to convert between the connector token and your token" v-model="initialPrice" :rules="numberRules" type="number"></v-text-field>
             </v-form>
-            <v-btn :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor" @click="issueTokens">Continue</v-btn>
+            <v-btn :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor" @click="calculateTotalBNT">Continue</v-btn>
         </v-stepper-content>
-        <v-stepper-step :complete="e6 > 5" step="5" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">Activation</v-stepper-step>
-        <v-stepper-content step="5" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">
+
+        <v-stepper-step :complete="e6 > 6" step="6" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">Fund Reserve</v-stepper-step>
+        <v-stepper-content step="6" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">
+            <v-card style="color:black;font-weight: bold; white-space: pre-line;" class="mb-12">
+                <v-card-text style="color:black;font-weight: bold; white-space: pre-line;">
+                    This step invloves the following <br />
+                    - Transfer the ERC20 connector amount from an existing account to the deployed converter address <br />
+                    - This is the same token used in step 1 <br />
+                    - The amount to be transfered is that indicated in step 5
+                </v-card-text>
+            </v-card>
+            <v-form ref="form">
+                <v-text-field label="Initial Supply" :v-model="totalTokenIssue" :value="totalTokenIssue" type="number" readonly></v-text-field>
+                <v-text-field label="Token Address" v-model="deployedConverter._address" :value="deployedConverter._address" readonly></v-text-field>
+            </v-form>
+            <v-btn :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor" @click="transferTotalERC20">Continue</v-btn>
+        </v-stepper-content>
+        <v-stepper-step :complete="e6 > 7" step="7" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">Fund Reserve</v-stepper-step>
+        <v-stepper-content step="7" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">
+            <v-card style="color:black;font-weight: bold; white-space: pre-line;" class="mb-12">
+                <v-card-text style="color:black;font-weight: bold; white-space: pre-line;">
+                    This step invloves the following <br />
+                    - Transfer the BNT connector amount from an existing account to the deployed converter address <br />
+                    - This is the amount of tokens required to convert to 1 {{selectedPrefix}} in other words <br />
+                    Total Initial Supply * (1 {{$store.state.deployedRelayTokenData.symbol}} in {{selectedPrefix}})
+                </v-card-text>
+            </v-card>
+            <v-form ref="form">
+                <v-text-field label="Token Value" :v-model="totalBNT" type="number" readonly></v-text-field>
+                <v-text-field label="Token Address" v-model="deployedConverter._address" :vlue="deployedConverter._address" readonly></v-text-field>
+            </v-form>
+            <v-btn :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor" @click="transferTotalBNT">Continue</v-btn>
+        </v-stepper-content>
+
+        <v-stepper-step :complete="e6 > 8" step="8" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">Activation</v-stepper-step>
+        <v-stepper-content step="8" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">
             <v-card flat>
                 <v-card-text style="color:black;font-weight: bold; white-space: pre-line;">
                     Activation means transferring the token ownership to the converter.
@@ -70,8 +121,8 @@
             </v-card>
             <v-btn :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor" @click="transferOwnerShip">Activate</v-btn>
         </v-stepper-content>
-        <v-stepper-step :complete="e6 > 6" step="6" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">Token Registry Registration</v-stepper-step>
-        <v-stepper-content step="6" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">
+        <v-stepper-step :complete="e6 > 9" step="9" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">Token Registry Registration</v-stepper-step>
+        <v-stepper-content step="9" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">
             <v-card flat>
                 <v-card-text style="color:black;font-weight: bold; white-space: pre-line;">
                     This Step involves <br />
@@ -116,8 +167,11 @@ export default {
     },
     data() {
         return {
+            tokenPrefixes: ["USDB", "BNT"],
+            selectedPrefix: "",
             initialFee: 0,
-            tokenIssueAmount: 0,
+            erc20Connector: 0,
+            totalTokenIssue: 0,
             e6: 1,
             tokenReserveAddress: '',
             isLoading: false,
@@ -134,13 +188,19 @@ export default {
             converterTokenAmount: 0,
             numberRules: [
                 v => !!v || "Number is required",
-                v => v && !isNaN(v) && parseInt(v) > 0 || "Invalid number, number must be greater than 0"
+                v => v && !isNaN(v) && parseInt(v) > 0 || "Invalid number, number must be greater than 0 and less than equal to 100000"
+            ],
+            conversionFeeRules: [
+                v => !!v || "Conversion Fee is required",
+                v => v && !isNaN(v) && parseInt(v) > 0 && parseInt(v) <= 100000 || "Invalid number, number must be greater than 0"
             ],
             userAddress: "",
             erc20Token: {},
             deployedConverter: {},
             converterTransfer: '',
-            bntTransfer: ''
+            bntTransfer: '',
+            initialPrice: 0,
+            totalBNT: 0
         }
     },
     mounted() {
@@ -157,14 +217,28 @@ export default {
         success(message) {
             swal.fire('Success', message, 'success')
         },
+        selectTokenPrefix() {
+            if (this.selectedPrefix === "") {
+                this.error("Please select a token Prefix")
+            } else {
+                this.e6++
+            }
+        },
+        calculateTotalBNT() {
+            this.isLoading = true
+            this.totalBNT = new bigNumber(this.totalTokenIssue).multipliedBy(this.initialPrice).toFixed()
+            this.isLoading = false
+            this.e6++
+        },
         addToTokenRegistry() {
             this.isLoading = true
-            this.$store.state.bancorTokenRegistry, methods.addConverter(this.deployConverter._address).send({
+            this.$store.state.bancorRegistryToken.methods.addConverter(this.deployedConverter._address).send({
                 from: this.$store.state.web3.eth.defaultAccount,
                 gas: this.$store.state.currentGas
             }).then((receipt, error) => {
                 if (receipt) {
                     this.success('Succesfully created liqudity Pool')
+                    this.e6 = 1
                 }
                 this.isLoading = false
             }).catch((error) => {
@@ -201,7 +275,7 @@ export default {
                                 var smartToken = new this.$store.state.web3.eth.Contract(require('../../json/smartToken.json'))
                                 var newToken = {
                                     "name": results.name + " Smart Relay Token",
-                                    "symbol": results.symbol + "BNT",
+                                    "symbol": results.symbol + this.selectedPrefix,
                                     "decimals": results.decimals
                                 }
                                 console.log('newToken: ', newToken)
@@ -219,11 +293,12 @@ export default {
                                         console.log('receipt: ', contract)
                                         if (contract) {
                                             This.$store.state.deployedRelayTokenData = {
-                                                "symbol": results.symbol + "BNT",
+                                                "symbol": results.symbol,
                                                 "decimals": results.decimals,
                                                 "name": results.name + "Smart Relay Token",
                                                 "token": contract,
-                                                "address": contract._address
+                                                "address": contract._address,
+                                                "relaySymbol": results.symbol + this.selectedPrefix
                                             }
                                             this.e6++
                                         }
@@ -248,13 +323,13 @@ export default {
             console.warn('this.$store.state.contractRegistryAddress: ', this.$store.state.contractRegistryAddress)
             var contract = new this.$store.state.web3.eth.Contract(abi.abi)
             this.isLoading = true
-            console.log([this.$store.state.deployedRelayTokenData.address, this.$store.state.contractRegistryAddress, new bigNumber(this.maxFee).toFixed(), this.erc20Token._address, new bigNumber(this.$store.state.converterWeight).toFixed()])
+            console.log([this.$store.state.deployedRelayTokenData.address, this.$store.state.contractRegistryAddress, new bigNumber(this.$store.state.maxFee).toFixed(), this.erc20Token._address, new bigNumber(this.$store.state.converterWeight).toFixed()])
             var address = this.erc20Token._address
             console.warn('address: ', address)
             console.warn('this.$store.state.converterData.byteCode: ', this.$store.state.converterData.byteCode)
             contract.deploy({
                 data: this.$store.state.converterData.byteCode,
-                arguments: [this.$store.state.deployedRelayTokenData.address, this.$store.state.contractRegistryAddress, new bigNumber(this.maxFee).toFixed(), address, this.$store.state.converterWeight]
+                arguments: [this.$store.state.deployedRelayTokenData.address, this.$store.state.contractRegistryAddress, new bigNumber(this.$store.state.maxFee).toFixed(), address, this.$store.state.converterWeight]
             }).send({
                 gas: this.$store.state.currentGas,
                 from: web3.eth.defaultAccount
@@ -273,7 +348,7 @@ export default {
         },
         setConversionFee() {
             this.isLoading = true
-            this.deployedConverter.methods.setConversionFee(maxFee).send({
+            this.deployedConverter.methods.setConversionFee(this.initialFee).send({
                 gas: this.$store.state.currentGas,
                 from: this.$store.state.web3.eth.defaultAccount
             }).then((receipt, error) => {
@@ -286,9 +361,10 @@ export default {
                 this.isLoading = false
             })
         },
-        transferToConverterContract: async function () {
+        transferTotalERC20: async function () {
             console.warn('this.deployedConverter: ', this.deployedConverter)
-            this.erc20Token.methods.transfer(this.deployedConverter._address, this.converterTransfer).send({
+            this.isLoading = true
+            this.erc20Token.methods.transfer(this.deployedConverter._address, this.totalTokenIssue).send({
                 gas: this.$store.state.currentGas,
                 from: this.$store.state.web3.eth.defaultAccount
             }).then((results, error) => {
@@ -302,45 +378,45 @@ export default {
                 this.error('Something went wrong please try again later')
             })
         },
-        transferTokenReserveToConverter() {
-            if (utils.isAddress(this.tokenReserveAddress)) {
-                var contract = new this.$store.state.web3.eth.Contract(this.$store.state.erc20.abi, this.tokenReserveAddress)
-                contract.methods.transfer(this.deployedConverter._address, this.bntTransfer).send({
-                    gas: this.$store.state.currentGas,
-                    from: this.$store.state.web3.eth.defaultAccount
-                }).then(async (receipt, error) => {
-                    if (receipt) {
-                        this.e6++
-                    }
-                    this.isLoading = false
-                }).catch((error) => {
-                    this.isLoading = false
-                    console.warn('error: ', error)
-                    this.error('Something went wrong please try again later')
-                    this.isLoading = false
-                })
-            } else {
-                this.error('Invalid token reserve address')
-            }
+        transferTotalBNT() {
+            this.isLoading = true
+            this.erc20Token.methods.transfer(this.deployedConverter._address, this.totalBNT).send({
+                gas: this.$store.state.currentGas,
+                from: this.$store.state.web3.eth.defaultAccount
+            }).then(async (receipt, error) => {
+                if (receipt) {
+                    this.e6++
+                }
+                this.isLoading = false
+            }).catch((error) => {
+                this.isLoading = false
+                console.warn('error: ', error)
+                this.error('Something went wrong please try again later')
+                this.isLoading = false
+            })
+
         },
         issueTokens: async function () {
-            if (this.bntTransfer > this.converterTransfer)
-                this.$store.state.deployedRelayTokenData.token.methods.issue(this.$store.state.web3.eth.defaultAccount, this.bntTransfer).send({
-                    gas: this.$store.state.currentGas,
-                    from: this.$store.state.web3.eth.defaultAccount
-                }).then((results, error) => {
-                    if (results) {
-                        this.isLoading = false
-                        this.e6++
-                    }
-                }).catch((error) => {
+            this.isLoading = true
+            var connectorBalance = new bigNumber(this.totalBNT).multipliedBy(2)
+            console.log('connectorBalance: ', connectorBalance.toFixed())
+            this.$store.state.deployedRelayTokenData.token.methods.issue(this.$store.state.web3.eth.defaultAccount, connectorBalance.toFixed()).send({
+                gas: this.$store.state.currentGas,
+                from: this.$store.state.web3.eth.defaultAccount
+            }).then((results, error) => {
+                if (results) {
                     this.isLoading = false
-                    console.warn('error: ', error)
-                    this.error('Something went wrong please try again later')
-                })
+                    this.e6++
+                }
+            }).catch((error) => {
+                this.isLoading = false
+                console.warn('error: ', error)
+                this.error('Something went wrong please try again later')
+            })
         },
         transferOwnerShip() {
             console.warn('this.deployedConverter: ', this.deployedConverter)
+            this.isLoading = true
             this.$store.state.deployedRelayTokenData.token.methods.transferOwnership(this.deployedConverter._address).send({
                 gas: this.$store.state.currentGas,
                 from: this.$store.state.web3.eth.defaultAccount
@@ -354,7 +430,7 @@ export default {
                             console.log('receipt: ', receipt)
                             this.isLoading = false
                             this.success('Succesfully created liquidity pool')
-                            this.$router.go()
+                            this.e6++
                         }
                     })
                 }
@@ -362,7 +438,7 @@ export default {
                 this.isLoading = false
                 console.warn('error: ', error)
                 this.error('Something went wrong please try again later')
-                this.$router.go()
+                this.e6 = 1
             })
         },
         deployERC20Token: async function () {
