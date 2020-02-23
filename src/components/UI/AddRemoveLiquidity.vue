@@ -3,9 +3,9 @@
     <v-form ref="form" v-model="valid" lazy-validation>
         <v-select outlined v-model="selectedActions" :items="actions" :rules="selectRules" label="Action" required></v-select>
         <v-select outlined v-model="selectedToken" :items="$store.state.tokens" item-text="tokenCode" item-value="tokenID" :rules="selectRules" label="Token Name" required></v-select>
-        <v-text-field :placeholder="currentPlaceHolder" type="number" outlined></v-text-field>
+        <v-text-field :label="currentPlaceHolder" :placeholder="currentPlaceHolder" type="number" outlined></v-text-field>
         <v-text-field v-if="!$store.state.wallectConnected" class="headline" style="font-weight: bold; color:black;" v-modal="warningText" loading="error" :placeholder="warningText" outlined disabled></v-text-field>
-        <v-btn :disabled="!valid" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor"  @click="validate">
+        <v-btn :disabled="!valid" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" @click="validate">
             Calculate
         </v-btn>
         <v-icon :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" @click="showInfo">
@@ -31,7 +31,7 @@ export default {
         checkbox: false,
         warningText: "Please connect your wallet",
         selectedActions: "",
-        currentPlacceHolder: 'Token Amount'
+        currentPlaceHolder: 'Token Amount'
     }),
     components: {
         aboutLiquidityModal,
@@ -40,10 +40,10 @@ export default {
     watch: {
         selectedActions: function (val) {
             if (val === 'Remove Liquidity') {
-                this.currentPlacceHolder = 'Amount to Liquidate'
+                this.currentPlaceHolder = 'Amount to Liquidate'
             }
             if (val === 'Add Liquidity' || val === '') {
-                this.currentPlacceHolder = 'Token Amount'
+                this.currentPlaceHolder = 'Token Amount'
             }
         }
     },
