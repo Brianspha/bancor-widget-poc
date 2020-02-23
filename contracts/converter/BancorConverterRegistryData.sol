@@ -277,7 +277,7 @@ contract BancorConverterRegistryData is IBancorConverterRegistryData, ContractRe
     */
     function addItem(Items storage _items, address _value) internal {
         Item storage item = _items.table[_value];
-        require(item.valid == false);
+        require(item.valid == false,"not false");
 
         item.index = _items.array.push(_value) - 1;
         item.valid = true;

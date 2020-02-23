@@ -5,10 +5,10 @@
         <v-select outlined v-model="selectedToken" :items="$store.state.tokens" item-text="tokenCode" item-value="tokenID" :rules="selectRules" label="Token Name" required></v-select>
         <v-text-field :placeholder="currentPlaceHolder" type="number" outlined></v-text-field>
         <v-text-field v-if="!$store.state.wallectConnected" class="headline" style="font-weight: bold; color:black;" v-modal="warningText" loading="error" :placeholder="warningText" outlined disabled></v-text-field>
-        <v-btn :disabled="!valid" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor" class="mr-4" @click="validate">
+        <v-btn :disabled="!valid" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor"  @click="validate">
             Calculate
         </v-btn>
-        <v-icon :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor" @click="showInfo">
+        <v-icon :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" @click="showInfo">
             {{$store.state.defaultInfoIcon}}
         </v-icon>
     </v-form>

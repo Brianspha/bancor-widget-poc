@@ -54,9 +54,6 @@ export default {
                     "title": "Pools",
                     "to": "/addremove"
                 }, {
-                    "title": "Existing Pools",
-                    "to": "/existing"
-                }, {
                     "title": "Conversions",
                     "to": "/conversions"
                 },
@@ -75,12 +72,13 @@ export default {
         console.log('mounted: ', this.activeTab)
         var tokensNames = require('./json/tokens.json').data.page
         tokensNames.map((token) => {
+            const [name, ext] = token.primaryCommunityImageName.split(".");
             this.$store.state.tokens.push({
                 "tokenName": token.name,
                 "tokenCode": token.code,
                 "tokenID": token.id,
                 "tokenCommunityID": token.primaryCommunityId,
-                "tokenImageName": token.primaryCommunityImageName
+                "tokenImage": `https://storage.googleapis.com/bancor-prod-file-store/images/communities/cache/${name}_200w.${ext}`
             })
         })
         console.log(this.$store.state.tokens)

@@ -1,0 +1,303 @@
+
+{
+  "header": {
+    "event": "Allocation failed - JavaScript heap out of memory",
+    "trigger": "FatalError",
+    "filename": "report.20200221.233954.12124.0.001.json",
+    "dumpEventTime": "2020-02-21T23:39:54Z",
+    "processId": 12124,
+    "cwd": "C:\\Users\\Development\\Documents\\GitHub\\bancor-widget-poc",
+    "commandLine": [
+      "node",
+      "C:\\Users\\Development\\AppData\\Roaming\\nvm\\v11.15.0\\node_modules\\embark\\node_modules\\ganache-cli\\cli.js",
+      "-p",
+      "8546",
+      "-h",
+      "localhost",
+      "-l",
+      "8000000",
+      "-a",
+      "10",
+      "-e",
+      "100"
+    ],
+    "nodejsVersion": "v11.15.0",
+    "wordSize": 64,
+    "arch": "x64",
+    "platform": "win32",
+    "componentVersions": {
+      "node": "11.15.0",
+      "v8": "7.0.276.38-node.19",
+      "uv": "1.27.0",
+      "zlib": "1.2.11",
+      "brotli": "1.0.7",
+      "ares": "1.15.0",
+      "modules": "67",
+      "nghttp2": "1.37.0",
+      "napi": "4",
+      "llhttp": "1.1.1",
+      "http_parser": "2.8.0",
+      "openssl": "1.1.1b",
+      "cldr": "34.0",
+      "icu": "63.1",
+      "tz": "2018e",
+      "unicode": "11.0"
+    },
+    "release": {
+      "name": "node",
+      "headersUrl": "https://nodejs.org/download/release/v11.15.0/node-v11.15.0-headers.tar.gz",
+      "sourceUrl": "https://nodejs.org/download/release/v11.15.0/node-v11.15.0.tar.gz",
+      "libUrl": "https://nodejs.org/download/release/v11.15.0/win-x64/node.lib"
+    },
+    "osName": "Windows_NT",
+    "osRelease": "10.0.17763",
+    "osVersion": "Windows 10 Enterprise LTSC 2019",
+    "osMachine": "x86_64",
+    "host": "DESKTOP-VEUUB5B"
+  },
+  "javascriptStack": {
+    "message": "No stack.",
+    "stack": [
+      "Unavailable."
+    ]
+  },
+  "nativeStack": [
+    {
+      "pc": "0x00007ff7e5b0d24e",
+      "symbol": "std::basic_ios<char,std::char_traits<char> >::fill+16366"
+    },
+    {
+      "pc": "0x00007ff7e5b0c0f9",
+      "symbol": "std::basic_ios<char,std::char_traits<char> >::fill+11929"
+    },
+    {
+      "pc": "0x00007ff7e5b0b923",
+      "symbol": "std::basic_ios<char,std::char_traits<char> >::fill+9923"
+    },
+    {
+      "pc": "0x00007ff7e5bfdc22",
+      "symbol": "uv_loop_fork+89362"
+    },
+    {
+      "pc": "0x00007ff7e602609e",
+      "symbol": "v8::internal::FatalProcessOutOfMemory+798"
+    },
+    {
+      "pc": "0x00007ff7e6025fd7",
+      "symbol": "v8::internal::FatalProcessOutOfMemory+599"
+    },
+    {
+      "pc": "0x00007ff7e60d9a14",
+      "symbol": "v8::internal::Heap::RootIsImmortalImmovable+14068"
+    },
+    {
+      "pc": "0x00007ff7e60cf838",
+      "symbol": "v8::internal::Heap::CollectGarbage+7256"
+    },
+    {
+      "pc": "0x00007ff7e60ce038",
+      "symbol": "v8::internal::Heap::CollectGarbage+1112"
+    },
+    {
+      "pc": "0x00007ff7e60d7967",
+      "symbol": "v8::internal::Heap::RootIsImmortalImmovable+5703"
+    },
+    {
+      "pc": "0x00007ff7e60d79e6",
+      "symbol": "v8::internal::Heap::RootIsImmortalImmovable+5830"
+    },
+    {
+      "pc": "0x00007ff7e620f8b1",
+      "symbol": "v8::internal::Factory::NewFillerObject+49"
+    },
+    {
+      "pc": "0x00007ff7e62c9786",
+      "symbol": "v8::internal::StoreBuffer::StoreBufferOverflow+27190"
+    },
+    {
+      "pc": "0x0000024708f50481",
+      "symbol": ""
+    }
+  ],
+  "javascriptHeap": {
+    "totalMemory": 145076224,
+    "totalCommittedMemory": 145076224,
+    "usedMemory": 137722672,
+    "availableMemory": 1385292296,
+    "memoryLimit": 1526909922,
+    "heapSpaces": {
+      "read_only_space": {
+        "memorySize": 524288,
+        "committedMemory": 524288,
+        "capacity": 515584,
+        "used": 33520,
+        "available": 482064
+      },
+      "new_space": {
+        "memorySize": 1048576,
+        "committedMemory": 1048576,
+        "capacity": 1031168,
+        "used": 1031144,
+        "available": 24
+      },
+      "old_space": {
+        "memorySize": 78843904,
+        "committedMemory": 78843904,
+        "capacity": 77380984,
+        "used": 76148184,
+        "available": 1232800
+      },
+      "code_space": {
+        "memorySize": 3670016,
+        "committedMemory": 3670016,
+        "capacity": 3265856,
+        "used": 2597728,
+        "available": 668128
+      },
+      "map_space": {
+        "memorySize": 2633728,
+        "committedMemory": 2633728,
+        "capacity": 2576464,
+        "used": 1014000,
+        "available": 1562464
+      },
+      "large_object_space": {
+        "memorySize": 58355712,
+        "committedMemory": 58355712,
+        "capacity": 1438244912,
+        "used": 56898096,
+        "available": 1381346816
+      },
+      "new_large_object_space": {
+        "memorySize": 0,
+        "committedMemory": 0,
+        "capacity": 0,
+        "used": 0,
+        "available": 0
+      }
+    }
+  },
+  "resourceUsage": {
+    "userCpuSeconds": 218.812,
+    "kernelCpuSeconds": 34.984,
+    "cpuConsumptionPercent": 0.741985,
+    "maxRss": 250892288,
+    "pageFaults": {
+      "IORequired": 4214485,
+      "IONotRequired": 0
+    },
+    "fsActivity": {
+      "reads": 3295,
+      "writes": 63213
+    }
+  },
+  "libuv": [
+  ],
+  "environmentVariables": {
+    "=C:": "C:\\Users\\Development\\Documents\\GitHub\\bancor-widget-poc",
+    "ALLUSERSPROFILE": "C:\\ProgramData",
+    "APPDATA": "C:\\Users\\Development\\AppData\\Roaming",
+    "asl.log=Destination": "file",
+    "ChocolateyInstall": "C:\\ProgramData\\chocolatey",
+    "ChocolateyLastPathUpdate": "132134822467630974",
+    "CommonProgramFiles": "C:\\Program Files\\Common Files",
+    "CommonProgramFiles(x86)": "C:\\Program Files (x86)\\Common Files",
+    "CommonProgramW6432": "C:\\Program Files\\Common Files",
+    "COMPUTERNAME": "DESKTOP-VEUUB5B",
+    "ComSpec": "C:\\WINDOWS\\system32\\cmd.exe",
+    "DAPP_PATH": "C:\\Users\\Development\\Documents\\GitHub\\bancor-widget-poc",
+    "DIAGRAM_PATH": "C:\\Users\\Development\\Documents\\GitHub\\bancor-widget-poc\\diagram.svg",
+    "DriverData": "C:\\Windows\\System32\\Drivers\\DriverData",
+    "EMBARK_PATH": "C:\\Users\\Development\\AppData\\Roaming\\nvm\\v11.15.0\\node_modules\\embark",
+    "ETHEREUM_SOCKET": "\\\\.\\pipe\\geth.ipc",
+    "GOPATH": "C:\\Users\\Development\\go",
+    "HOMEDRIVE": "C:",
+    "HOMEPATH": "\\Users\\Development",
+    "ipfs": "C:\\Users\\Development\\Documents\\ipfs\\ipfs.exe",
+    "LOCALAPPDATA": "C:\\Users\\Development\\AppData\\Local",
+    "LOGONSERVER": "\\\\DESKTOP-VEUUB5B",
+    "NODE_PATH": "C:\\Users\\Development\\AppData\\Roaming\\nvm\\v11.15.0\\node_modules\\embark\\node_modules;C:\\Users\\Development\\AppData\\Roaming\\nvm\\v11.15.0\\node_modules;C:\\Users\\Development\\node_modules",
+    "NUMBER_OF_PROCESSORS": "4",
+    "NVM_HOME": "C:\\Users\\Development\\AppData\\Roaming\\nvm",
+    "NVM_SYMLINK": "C:\\Program Files\\nodejs",
+    "OneDrive": "C:\\Users\\Development\\OneDrive",
+    "OS": "Windows_NT",
+    "Path": "C:\\ProgramData\\DockerDesktop\\version-bin;C:\\Program Files\\Docker\\Docker\\Resources\\bin;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Users\\Development\\AppData\\Roaming\\nvm;C:\\Program Files\\nodejs;C:\\Program Files\\Geth;C:\\Users\\Development\\Documents\\ipfs;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Users\\Development\\Documents\\ipfs;C:\\Go\\bin;C:\\Program Files\\dotnet\\;C:\\Program Files\\Microsoft SQL Server\\130\\Tools\\Binn\\;C:\\ProgramData\\chocolatey\\bin;C:\\Program Files (x86)\\Yarn\\bin\\;C:\\Program Files\\Git\\cmd;C:\\Users\\Development\\.windows-build-tools\\python27\\;C:\\Users\\Development\\AppData\\Local\\Programs\\Python\\Python37\\Scripts\\;C:\\Users\\Development\\AppData\\Local\\Programs\\Python\\Python37\\;C:\\Users\\Development\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\Development\\AppData\\Roaming\\nvm;C:\\Program Files\\nodejs;C:\\Users\\Development\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\Development\\Documents\\ipfs;C:\\Users\\Development\\go\\bin;C:\\Program Files\\heroku\\bin;C:\\Users\\Development\\AppData\\Local\\GitHubDesktop\\bin;C:\\Users\\Development\\AppData\\Local\\Yarn\\bin;C:\\Users\\Development\\.dotnet\\tools",
+    "PATHEXT": ".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.PY;.PYW",
+    "PKG_PATH": "undefined",
+    "PROCESSOR_ARCHITECTURE": "AMD64",
+    "PROCESSOR_IDENTIFIER": "Intel64 Family 6 Model 61 Stepping 4, GenuineIntel",
+    "PROCESSOR_LEVEL": "6",
+    "PROCESSOR_REVISION": "3d04",
+    "ProgramData": "C:\\ProgramData",
+    "ProgramFiles": "C:\\Program Files",
+    "ProgramFiles(x86)": "C:\\Program Files (x86)",
+    "ProgramW6432": "C:\\Program Files",
+    "PROMPT": "$P$G",
+    "PROVIDER": "http://localhost:8546",
+    "PSModulePath": "C:\\Program Files\\WindowsPowerShell\\Modules;C:\\WINDOWS\\system32\\WindowsPowerShell\\v1.0\\Modules",
+    "PUBLIC": "C:\\Users\\Public",
+    "PWD": "C:\\Users\\Development\\Documents\\GitHub\\bancor-widget-poc",
+    "SESSIONNAME": "Console",
+    "SynaProgDir": "Synaptics\\SynTP",
+    "SystemDrive": "C:",
+    "SystemRoot": "C:\\WINDOWS",
+    "TEMP": "C:\\Users\\DEVELO~1\\AppData\\Local\\Temp",
+    "TMP": "C:\\Users\\DEVELO~1\\AppData\\Local\\Temp",
+    "USERDOMAIN": "DESKTOP-VEUUB5B",
+    "USERDOMAIN_ROAMINGPROFILE": "DESKTOP-VEUUB5B",
+    "USERNAME": "Development",
+    "USERPROFILE": "C:\\Users\\Development",
+    "windir": "C:\\WINDOWS"
+  },
+  "sharedObjects": [
+    "C:\\Program Files\\nodejs\\node.exe",
+    "C:\\WINDOWS\\SYSTEM32\\ntdll.dll",
+    "C:\\WINDOWS\\System32\\KERNEL32.DLL",
+    "C:\\WINDOWS\\System32\\KERNELBASE.dll",
+    "C:\\WINDOWS\\System32\\PSAPI.DLL",
+    "C:\\WINDOWS\\System32\\WS2_32.dll",
+    "C:\\WINDOWS\\System32\\RPCRT4.dll",
+    "C:\\WINDOWS\\System32\\ADVAPI32.dll",
+    "C:\\WINDOWS\\System32\\msvcrt.dll",
+    "C:\\WINDOWS\\System32\\sechost.dll",
+    "C:\\WINDOWS\\System32\\USER32.dll",
+    "C:\\WINDOWS\\System32\\win32u.dll",
+    "C:\\WINDOWS\\System32\\GDI32.dll",
+    "C:\\WINDOWS\\System32\\gdi32full.dll",
+    "C:\\WINDOWS\\System32\\msvcp_win.dll",
+    "C:\\WINDOWS\\System32\\ucrtbase.dll",
+    "C:\\WINDOWS\\System32\\CRYPT32.dll",
+    "C:\\WINDOWS\\System32\\MSASN1.dll",
+    "C:\\WINDOWS\\System32\\bcrypt.dll",
+    "C:\\WINDOWS\\SYSTEM32\\dbghelp.dll",
+    "C:\\WINDOWS\\SYSTEM32\\IPHLPAPI.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\USERENV.dll",
+    "C:\\WINDOWS\\System32\\profapi.dll",
+    "C:\\WINDOWS\\SYSTEM32\\WINMM.dll",
+    "C:\\WINDOWS\\SYSTEM32\\winmmbase.dll",
+    "C:\\WINDOWS\\System32\\cfgmgr32.dll",
+    "C:\\WINDOWS\\System32\\IMM32.DLL",
+    "C:\\WINDOWS\\System32\\powrprof.dll",
+    "C:\\WINDOWS\\system32\\uxtheme.dll",
+    "C:\\WINDOWS\\System32\\combase.dll",
+    "C:\\WINDOWS\\System32\\bcryptPrimitives.dll",
+    "C:\\WINDOWS\\system32\\mswsock.dll",
+    "C:\\WINDOWS\\System32\\kernel.appcore.dll",
+    "\\\\?\\C:\\Users\\Development\\AppData\\Roaming\\nvm\\v11.15.0\\node_modules\\embark\\node_modules\\ganache-cli\\node_modules\\keccak\\build\\Rele",
+    "\\\\?\\C:\\Users\\Development\\AppData\\Roaming\\nvm\\v11.15.0\\node_modules\\embark\\node_modules\\ganache-cli\\node_modules\\secp256k1\\build\\R",
+    "C:\\WINDOWS\\SYSTEM32\\CRYPTBASE.DLL",
+    "C:\\WINDOWS\\System32\\NSI.dll",
+    "C:\\WINDOWS\\SYSTEM32\\dhcpcsvc6.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\dhcpcsvc.DLL",
+    "C:\\WINDOWS\\SYSTEM32\\DNSAPI.dll",
+    "C:\\WINDOWS\\system32\\napinsp.dll",
+    "C:\\WINDOWS\\system32\\pnrpnsp.dll",
+    "C:\\WINDOWS\\System32\\winrnr.dll",
+    "C:\\WINDOWS\\system32\\NLAapi.dll",
+    "C:\\WINDOWS\\system32\\wshbth.dll",
+    "C:\\Program Files\\Bonjour\\mdnsNSP.dll",
+    "C:\\Windows\\System32\\rasadhlp.dll",
+    "C:\\WINDOWS\\System32\\fwpuclnt.dll"
+  ]
+}

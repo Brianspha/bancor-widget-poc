@@ -1,8 +1,8 @@
 <template>
 <v-container>
     <v-stepper v-model="e6" vertical>
-        <v-stepper-step :complete="e6 > 1" step="1" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">Connector Selection</v-stepper-step>
-        <v-stepper-content step="1" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">
+        <v-stepper-step :complete="e6 > 1" step="1" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">Connector Selection</v-stepper-step>
+        <v-stepper-content step="1" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">
             <v-card flat>
                 <v-card-text style="color:black;font-weight: bold; white-space: pre-line;">
                     Do you want <a href="#">BNT</a>or <a href="#">USDB</a> as the reserve liquidity of your new token exchange?
@@ -11,11 +11,11 @@
             <v-form ref="form" v-model="validTokenAddress" lazy-validation>
                 <v-select :items="tokenPrefixes" v-model="selectedPrefix" filled label="Connector Type"></v-select>
             </v-form>
-            <v-btn :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor" @click="selectTokenPrefix">Continue</v-btn>
+            <v-btn :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" @click="selectTokenPrefix">Continue</v-btn>
         </v-stepper-content>
 
-        <v-stepper-step :complete="e6 > 2" step="2" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">Create Relay Token (aka SmartToken)</v-stepper-step>
-        <v-stepper-content step="2" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">
+        <v-stepper-step :complete="e6 > 2" step="2" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">Create Relay Token (aka SmartToken)</v-stepper-step>
+        <v-stepper-content step="2" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">
             <v-card flat>
                 <v-card-text style="color:black;font-weight: bold; white-space: pre-line;">
                     If your token is called AAA, a relay token called AAABNT will be created.
@@ -29,11 +29,11 @@
             <v-form ref="form" v-model="validTokenAddress" lazy-validation>
                 <v-text-field v-model="tokenAddress" :counter="42" :rules="addressRules" label="Token Address" required></v-text-field>
             </v-form>
-            <v-btn :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor" @click="validateTokenAddress">Continue</v-btn>
+            <v-btn :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" @click="validateTokenAddress">Continue</v-btn>
         </v-stepper-content>
-        <v-stepper-step :complete="e6 > 3" step="3" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">Converter Deployment
+        <v-stepper-step :complete="e6 > 3" step="3" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">Converter Deployment
         </v-stepper-step>
-        <v-stepper-content step="3" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">
+        <v-stepper-content step="3" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">
             <v-card class="mb-12">
                 <v-card-text style="color:black;font-weight: bold; white-space: pre-line;">
                     Smart token address from previous step,<br /> Bancor registry contract address,<br /> Max Fee: 30000 (3%),<br /> Weight: 500,000 (50%)
@@ -46,10 +46,10 @@
                     <v-text-field :v-model="$store.state.converterWeight" :value="$store.state.converterWeight" label="Converter Weight" readonly></v-text-field>
                 </v-form>
             </v-card>
-            <v-btn :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor" @click="deployConverter">Continue</v-btn>
+            <v-btn :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" @click="deployConverter">Continue</v-btn>
         </v-stepper-content>
-        <v-stepper-step :complete="e6 > 4" step="4" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">Set Conversion Fee</v-stepper-step>
-        <v-stepper-content step="4" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">
+        <v-stepper-step :complete="e6 > 4" step="4" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">Set Conversion Fee</v-stepper-step>
+        <v-stepper-content step="4" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">
             <v-card style="color:black;font-weight: bold; white-space: pre-line;" class="mb-12">
                 <v-card-text style="color:black;font-weight: bold; white-space: pre-line;">
                     This step invloves the following <br />
@@ -59,27 +59,28 @@
             <v-form ref="form">
                 <v-text-field label="Conversion Fee" min="1000" max="100000" v-model="initialFee" hint="1000= (0.1%)" :rules="conversionFeeRules" type="number"></v-text-field>
             </v-form>
-            <v-btn :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor" @click="setConversionFee">Continue</v-btn>
+            <v-btn :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" @click="setConversionFee">Continue</v-btn>
         </v-stepper-content>
-        <v-stepper-step :complete="e6 > 5" step="5" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">Initial Supply</v-stepper-step>
-        <v-stepper-content step="5" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">
+        <v-stepper-step :complete="e6 > 5" step="5" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">Initial Supply</v-stepper-step>
+        <v-stepper-content step="5" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">
             <v-card style="color:black;font-weight: bold; white-space: pre-line;" class="mb-12">
                 <v-card-text style="color:black;font-weight: bold; white-space: pre-line;">
                     This step invloves the following <br />
                     - Setting the Initial Suply for the liquidity Pool <br />
                     - Setting the the Initial Price for the token {{selectedPrefix}} <br />
-                    - Setting the conversion between {{selectedPrefix}} amount for 1 {{$store.state.deployedRelayTokenData.symbol}}
+                    - Setting the conversion between {{selectedPrefix}} amount for 1 {{$store.state.deployedRelayTokenData.symbol}} <br />
+                    - For example 2000 {{$store.state.deployedRelayTokenData.symbol}} represents 1 {{selectedPrefix}}
                 </v-card-text>
             </v-card>
             <v-form ref="form">
                 <v-text-field label="Initial Supply" hint="Token initial supply the liquidity pool" v-model="totalTokenIssue" :rules="numberRules" type="number"></v-text-field>
                 <v-text-field label="Initial Price" :placeholder="`Enter {{selectedPrefix}} amount for 1 {{$store.state.deployedRelayTokenData.symbol}}`" hint="Amount to convert between the connector token and your token" v-model="initialPrice" :rules="numberRules" type="number"></v-text-field>
             </v-form>
-            <v-btn :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor" @click="calculateTotalBNT">Continue</v-btn>
+            <v-btn :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" @click="calculateTotalBNT">Continue</v-btn>
         </v-stepper-content>
 
-        <v-stepper-step :complete="e6 > 6" step="6" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">Fund Reserve</v-stepper-step>
-        <v-stepper-content step="6" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">
+        <v-stepper-step :complete="e6 > 6" step="6" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">Fund Reserve</v-stepper-step>
+        <v-stepper-content step="6" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">
             <v-card style="color:black;font-weight: bold; white-space: pre-line;" class="mb-12">
                 <v-card-text style="color:black;font-weight: bold; white-space: pre-line;">
                     This step invloves the following <br />
@@ -92,10 +93,10 @@
                 <v-text-field label="Initial Supply" :v-model="totalTokenIssue" :value="totalTokenIssue" type="number" readonly></v-text-field>
                 <v-text-field label="Token Address" v-model="deployedConverter._address" :value="deployedConverter._address" readonly></v-text-field>
             </v-form>
-            <v-btn :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor" @click="transferTotalERC20">Continue</v-btn>
+            <v-btn :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" @click="transferTotalERC20">Continue</v-btn>
         </v-stepper-content>
-        <v-stepper-step :complete="e6 > 7" step="7" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">Fund Reserve</v-stepper-step>
-        <v-stepper-content step="7" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">
+        <v-stepper-step :complete="e6 > 7" step="7" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">Fund Reserve</v-stepper-step>
+        <v-stepper-content step="7" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">
             <v-card style="color:black;font-weight: bold; white-space: pre-line;" class="mb-12">
                 <v-card-text style="color:black;font-weight: bold; white-space: pre-line;">
                     This step invloves the following <br />
@@ -105,37 +106,37 @@
                 </v-card-text>
             </v-card>
             <v-form ref="form">
-                <v-text-field label="Token Value" :v-model="totalBNT" type="number" readonly></v-text-field>
+                <v-text-field label="Token Value" :v-model="totalBNT" :value="totalBNT" type="number" readonly></v-text-field>
                 <v-text-field label="Token Address" v-model="deployedConverter._address" :vlue="deployedConverter._address" readonly></v-text-field>
             </v-form>
-            <v-btn :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor" @click="transferTotalBNT">Continue</v-btn>
+            <v-btn :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" @click="transferTotalBNT">Continue</v-btn>
         </v-stepper-content>
 
-        <v-stepper-step :complete="e6 > 8" step="8" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">Activation</v-stepper-step>
-        <v-stepper-content step="8" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">
+        <v-stepper-step :complete="e6 > 8" step="8" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">Activation</v-stepper-step>
+        <v-stepper-content step="8" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">
             <v-card flat>
                 <v-card-text style="color:black;font-weight: bold; white-space: pre-line;">
                     Activation means transferring the token ownership to the converter.
                 </v-card-text>
             </v-card>
-            <v-btn :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor" @click="transferOwnerShip">Activate</v-btn>
+            <v-btn :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" @click="transferOwnerShip">Activate</v-btn>
         </v-stepper-content>
-        <v-stepper-step :complete="e6 > 9" step="9" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">Token Registry Registration</v-stepper-step>
-        <v-stepper-content step="9" :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor">
+        <v-stepper-step :complete="e6 > 9" step="9" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">Token Registry Registration</v-stepper-step>
+        <v-stepper-content step="9" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">
             <v-card flat>
                 <v-card-text style="color:black;font-weight: bold; white-space: pre-line;">
                     This Step involves <br />
                     Adding the Token to the token registry
                 </v-card-text>
             </v-card>
-            <v-btn :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor" @click="addToTokenRegistry">Finish</v-btn>
+            <v-btn :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" @click="addToTokenRegistry">Finish</v-btn>
         </v-stepper-content>
     </v-stepper>
     <v-card align="center" justify="center">
         <v-card-text>
             Please select <a href="https://etherscan.io//gasTracker">gas price</a>
         </v-card-text>
-        <v-btn-toggle :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor" v-model="toggle_exclusive" mandatory>
+        <v-btn-toggle :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" v-model="toggle_exclusive" mandatory>
             <v-btn @click="setGasPrice(3)">
                 High
             </v-btn>
@@ -166,6 +167,7 @@ export default {
     },
     data() {
         return {
+            toggle_exclusive: '',
             tokenPrefixes: ["USDB", "BNT"],
             selectedPrefix: "",
             initialFee: 0,
@@ -270,7 +272,7 @@ export default {
                 var config2 = await Promise.resolve(this.checkIfTokenRegistered([this.connectorAddress, this.tokenAddress], [500000, 500000]))
                 var config3 = await Promise.resolve(this.checkIfTokenRegistered([this.tokenAddress, this.connectorAddress], [300000, 300000]))
                 var config4 = await Promise.resolve(this.checkIfTokenRegistered([this.connectorAddress, this.tokenAddress], [300000, 300000]))
-                if (config1 || config2 || config3 || config4) {
+                if ((config1 || config2 || config3 || config4)) {
                     This.error("This Token is already registered on the bancor network")
                     This.isLoading = false
                 } else {
@@ -314,16 +316,20 @@ export default {
                 }
             }
         },
-        checkIfTokenRegistered(config) {
+        checkIfTokenRegistered(tokenAddresses, ratios) {
             this.isLoading = true
-            console.log('config: ', config)
+            /* console.log('config: ', tokenAddresses, ' ratios: ', ratios)
+             console.warn('this.$store.state.bancorRegistryABI: ', this.$store.state.bancorRegistryABI)
+             var contract = new this.$store.state.web3.eth.Contract(this.$store.state.bancorRegistryABI, this.$store.state.bancorRegistry.address)
+             console.warn('warn: ', contract)*/
             return new Promise((resolve, reject) => {
-                this.$store.state.bancorRegistry.methods.getLiquidityPoolByReserveConfig(config).call({
+                this.$store.state.bancorRegistry.methods.getLiquidityPoolByReserveConfig(tokenAddresses, ratios).call({
                     gas: 8000000
                 }).then(async (address, error) => {
+                    console.warn("address !== '0x0000000000000000000000000000000000000000'", address !== '0x0000000000000000000000000000000000000000')
                     resolve(address !== '0x0000000000000000000000000000000000000000')
                 }).catch((error) => {
-                    console.erro('error: ', error)
+                    console.error('error: ', error)
                     resolve(false)
                 })
             })
@@ -397,7 +403,7 @@ export default {
                 from: this.$store.state.web3.eth.defaultAccount
             }).then(async (receipt, error) => {
                 if (receipt) {
-                    this.e6++
+                    this.issueTokens()
                 }
                 this.isLoading = false
             }).catch((error) => {
@@ -432,19 +438,26 @@ export default {
             this.$store.state.deployedRelayTokenData.token.methods.transferOwnership(this.deployedConverter._address).send({
                 gas: this.$store.state.currentGas,
                 from: this.$store.state.web3.eth.defaultAccount
-            }).then((results, error) => {
+            }).then(async (results, error) => {
                 if (results) {
-                    this.deployedConverter.methods.acceptTokenOwnership().send({
-                        gas: this.$store.state.currentGas,
-                        from: this.$store.state.web3.eth.defaultAccount
-                    }).then((receipt, error) => {
-                        if (receipt) {
-                            console.log('receipt: ', receipt)
-                            this.isLoading = false
-                            this.success('Succesfully created liquidity pool')
-                            this.e6++
-                        }
-                    })
+                    await this.acceptTokenOwnership()
+                }
+            }).catch((error) => {
+                this.isLoading = false
+                console.warn('error: ', error)
+                this.error('Something went wrong please try again later')
+                this.e6 = 1
+            })
+        },
+        acceptTokenOwnership: async function () {
+            this.deployedConverter.methods.acceptTokenOwnership().send({
+                gas: this.$store.state.currentGas,
+                from: this.$store.state.web3.eth.defaultAccount
+            }).then((receipt, error) => {
+                if (receipt) {
+                    console.log('receipt: ', receipt)
+                    this.isLoading = false
+                    this.e6++
                 }
             }).catch((error) => {
                 this.isLoading = false

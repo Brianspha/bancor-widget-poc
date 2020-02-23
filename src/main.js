@@ -5,7 +5,9 @@ import store from './store/index'
 
 // plugins
 import AtUI from 'at-ui'
+import Multiselect from 'vue-multiselect'
 
+// register globally
 import 'at-ui-style/css/at.css'
 import './assets/css/main.scss'
 import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
@@ -21,7 +23,8 @@ Vue.use(vueCustomElement)
 Vue.use(vuetify)
 Vue.use(AtUI)
 Vue.config.productionTip = false
- 
+Vue.component('multiselect', Multiselect)
+
 Vue.component('text-highlight', TextHighlight);
 // new Vue is not needed anymore, as you're initializing the app through vue-custom-element
 // new Vue({

@@ -65,14 +65,19 @@ module.exports = {
                 deploy: false,
             },
             USDB: {
-                instanceof:'ERC20Token',
+                instanceOf: 'ERC20Token',
                 args: [
-                    'Bancor USD Token','USDB',  18993213635516837
+                    'Bancor USD Token', 'USDB', 18, 18000000000
                 ]
             },
-            BNT:{
-                instanceof:'ERC20Token',
-                args:['Bancor','BNT',18691486415634976]
+            BNT: {
+                instanceOf: 'ERC20Token',
+                args: ['Bancor', 'BNT', 18, 18000000000]
+            },
+            DBToken: {
+                instanceOf: 'ERC20Token',
+                args: ['DBToken', 'DBT', 18, 18000000000]
+
             },
             XTransferRerouter: {
                 args: [true]
@@ -84,30 +89,22 @@ module.exports = {
                     5000,
                     "$ERC20Token",
                     25000
-                ],
-                afterDeploy:async(dependencies)=>{
-                    console.log(dependencies)
-                    await dependencies.contracts.methods.ContractRegistry.registerAddress(web3.utils.fromAscii(ContractFeatures), dependencies.contracts.ContractFeatures.address).send({
-                        gas: 6000000
-                    })
-                    await dependencies.contracts.methods.ContractRegistry.registerAddress(web3.utils.fromAscii(BancorFormula), dependencies.contracts.BancorFormula.address).send({
-                        gas: 6000000
-                    })
-                    await dependencies.contracts.methods.ContractRegistry.registerAddress(web3.utils.fromAscii(BancorNetwork), dependencies.contracts.BancorNetwork.address).send({
-                        gas: 6000000
-                    })
-                    await dependencies.contracts.methods.ContractRegistry.registerAddress(web3.utils.fromAscii(BancorConverterFactory), dependencies.contracts.BancorConverterFactory.address).send({
-                        gas: 6000000
-                    })
-                    await dependencies.contracts.methods.ContractRegistry.registerAddress(web3.utils.fromAscii(BancorConverterUpgrader), dependencies.contracts.BancorConverterUpgrader.address).send({
-                        gas: 6000000
-                    })
-                }
+                ]
             },
             BancorConverterRegistry: {
                 args: [
                     "$ContractRegistry"
-                ]
+                ],
+                onDeploy: async ({
+                    contracts,
+                    web3,
+                    logger
+                }) => {
+                    console.log('contracts: ', contracts)
+                    await contracts.ContractRegistry.methods.registerAddress(web3.utils.fromAscii("BancorConverterRegistry"), contracts.BancorConverterRegistry.address).send({
+                        gas: 6000000
+                    })
+                }
             },
             BancorConverterUpgrader: {
                 args: [
@@ -117,7 +114,17 @@ module.exports = {
             BancorConverterRegistryData: {
                 args: [
                     "$ContractRegistry"
-                ]
+                ],
+                onDeploy: async ({
+                    contracts,
+                    web3,
+                    logger
+                }) => {
+                    console.log('contracts: ', contracts)
+                    await contracts.ContractRegistry.methods.registerAddress(web3.utils.fromAscii("BancorConverterRegistryData"), contracts.BancorConverterRegistryData.address).send({
+                        gas: 6000000
+                    })
+                }
             },
             CrowdsaleController: {
                 args: [
@@ -128,9 +135,6 @@ module.exports = {
                     "0xd3a40f1165164f13f237cc938419cc292e66b7bb3aa190f21087a3813c5ae1ca"
                 ]
             },
-            NonStandardSmartToken: {
-                args: ['SphaToken', 'ST', 18]
-            },
             EtherToken: {
                 args: [
                     'SphaToken', 'ST'
@@ -140,7 +144,27 @@ module.exports = {
                 args: ['SphaToken', 'ST', 18]
             }
         },
-
+        /*afterDeploy: async (dependencies) => {
+            console.log(dependencies)
+            await dependencies.contracts.methods.ContractRegistry.registerAddress(web3.utils.fromAscii("ContractFeatures"), dependencies.contracts.ContractFeatures.address).send({
+                gas: 6000000
+            })
+            await dependencies.contracts.methods.ContractRegistry.registerAddress(web3.utils.fromAscii("BancorFormula"), dependencies.contracts.BancorFormula.address).send({
+                gas: 6000000
+            })
+            await dependencies.contracts.methods.ContractRegistry.registerAddress(web3.utils.fromAscii("BancorNetwork"), dependencies.contracts.BancorNetwork.address).send({
+                gas: 6000000
+            })
+            await dependencies.contracts.methods.ContractRegistry.registerAddress(web3.utils.fromAscii("BancorConverterFactory"), dependencies.contracts.BancorConverterFactory.address).send({
+                gas: 6000000
+            })
+            await dependencies.contracts.methods.ContractRegistry.registerAddress(web3.utils.fromAscii("BancorConverterUpgrader"), dependencies.contracts.BancorConverterUpgrader.address).send({
+                gas: 6000000
+            }),
+            await dependencies.contracts.methods.ContractRegistry.registerAddress(web3.utils.fromAscii("BancorConverterRegistryData"), dependencies.contracts.BancorConverterRegistryData.address).send({
+                gas: 6000000
+            })
+        },*/
         // default environment, merges with the settings in default
         // assumed to be the intended environment by `embark run`
         development: {
