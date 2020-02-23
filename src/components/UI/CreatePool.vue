@@ -79,7 +79,7 @@
             <v-btn :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" @click="calculateTotalBNT">Continue</v-btn>
         </v-stepper-content>
 
-        <v-stepper-step :complete="e6 > 6" step="6" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">Fund Reserve</v-stepper-step>
+        <v-stepper-step :complete="e6 > 6" step="6" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">Fund Reserve (1)</v-stepper-step>
         <v-stepper-content step="6" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">
             <v-card style="color:black;font-weight: bold; white-space: pre-line;" class="mb-12">
                 <v-card-text style="color:black;font-weight: bold; white-space: pre-line;">
@@ -95,7 +95,7 @@
             </v-form>
             <v-btn :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" @click="transferTotalERC20">Continue</v-btn>
         </v-stepper-content>
-        <v-stepper-step :complete="e6 > 7" step="7" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">Fund Reserve</v-stepper-step>
+        <v-stepper-step :complete="e6 > 7" step="7" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">Fund Reserve (2)</v-stepper-step>
         <v-stepper-content step="7" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">
             <v-card style="color:black;font-weight: bold; white-space: pre-line;" class="mb-12">
                 <v-card-text style="color:black;font-weight: bold; white-space: pre-line;">
@@ -132,25 +132,7 @@
             <v-btn :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" @click="addToTokenRegistry">Finish</v-btn>
         </v-stepper-content>
     </v-stepper>
-    <v-card align="center" justify="center">
-        <v-card-text>
-            Please select <a href="https://etherscan.io//gasTracker">gas price</a>
-        </v-card-text>
-        <v-btn-toggle :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" v-model="toggle_exclusive" mandatory>
-            <v-btn @click="setGasPrice(3)">
-                High
-            </v-btn>
-            <v-btn @click="setGasPrice(2)">
-                Average
-            </v-btn>
-            <v-btn @click="setGasPrice(1)">
-                Low
-            </v-btn>
-        </v-btn-toggle>
-        <v-card-text>
-            For faster completion, increase the gas price in your waller after clicking our action buttons, but before confirming transactions in your wallet <a href="https://metamask.zendesk.com/hc/en-us/articles/360015488771-How-to-Adjust-Gas-Price-and-Gas-Limit-">See how</a>
-        </v-card-text>
-    </v-card>
+    
     <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="true"></loading>
 </v-container>
 </template>
@@ -215,10 +197,6 @@ export default {
         console.warn('$store.state.defaultAccount: ', this.$store.state.defaultAccount)
     },
     methods: {
-        setGasPrice(price) {
-            this.$store.state.gasPrice = price;
-            console.log('changed Gas Price: ', price)
-        },
         error(message) {
             swal.fire('Error', message, 'error')
         },
@@ -341,13 +319,13 @@ export default {
             console.warn('this.$store.state.contractRegistryAddress: ', this.$store.state.contractRegistryAddress)
             var contract = new this.$store.state.web3.eth.Contract(abi.abi)
             this.isLoading = true
-            console.log([this.$store.state.deployedRelayTokenData.address, this.$store.state.contractRegistryAddress, new bigNumber(this.$store.state.maxFee).toFixed(), this.erc20Token._address, new bigNumber(this.$store.state.converterWeight).toFixed()])
+            console.log([this.$store.state.deployedRelayTokenData.address, this.$store.state.contractRegistryAddress, new bigNumber(this.$store.state.maxFee).toFixed(), this.connectorAddress, new bigNumber(this.$store.state.converterWeight).toFixed()])
             var address = this.erc20Token._address
             console.warn('address: ', address)
             console.warn('this.$store.state.converterData.byteCode: ', this.$store.state.converterData.byteCode)
             contract.deploy({
                 data: this.$store.state.converterData.byteCode,
-                arguments: [this.$store.state.deployedRelayTokenData.address, this.$store.state.contractRegistryAddress, new bigNumber(this.$store.state.maxFee).toFixed(), address, this.$store.state.converterWeight]
+                arguments: [this.$store.state.deployedRelayTokenData.address, this.$store.state.contractRegistryAddress, new bigNumber(this.$store.state.maxFee).toFixed(), this.connectorAddress, this.$store.state.converterWeight]
             }).send({
                 gas: this.$store.state.currentGas,
                 from: web3.eth.defaultAccount

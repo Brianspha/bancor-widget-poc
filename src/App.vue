@@ -23,7 +23,7 @@
                     </v-toolbar>
                     <v-card-text>
                         <v-tabs v-model="selectedTab" background-color="white" :color="$root.widgetcolor?$root.widgetcolor:$store.state.defualtColor" right>
-                            <v-tab v-for="(tab,i) in tabs" :key="i" :to="tab.to">{{tab.title}}</v-tab>
+                            <v-tab v-for="(tab,i) in tabs" :key="i" href :to="tab.to">{{tab.title}}</v-tab>
                         </v-tabs>
                         <v-tabs-items v-model="selectedTab">
                             <v-tab-item v-for="(tab_,i) in tabs" :key="i" :value="tab_  .to">
@@ -31,6 +31,25 @@
                         </v-tabs-items>
                         <router-view></router-view>
                     </v-card-text>
+                    <v-card align="center" justify="center">
+                        <v-card-text>
+                            Please select <a href="https://etherscan.io//gasTracker">gas price</a>
+                        </v-card-text>
+                        <v-btn-toggle :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" v-model="toggle_exclusive" mandatory>
+                            <v-btn @click="setGasPrice(8000000000)">
+                                High
+                            </v-btn>
+                            <v-btn @click="setGasPrice(4000000000)">
+                                Average
+                            </v-btn>
+                            <v-btn @click="setGasPrice(2000000000)">
+                                Low
+                            </v-btn>
+                        </v-btn-toggle>
+                        <v-card-text>
+                            For faster completion, increase the gas price in your waller after clicking our action buttons, but before confirming transactions in your wallet <a href="https://metamask.zendesk.com/hc/en-us/articles/360015488771-How-to-Adjust-Gas-Price-and-Gas-Limit-">See how</a>
+                        </v-card-text>
+                    </v-card>
                 </v-card>
             </v-dialog>
         </v-container>
@@ -63,29 +82,83 @@ export default {
                 }
             ],
             collapseOnScroll: true,
-            showMenu: false
+            showMenu: false,
+            tokens: [],
+            toggle_exclusive: true
         }
     },
     mounted() {
-        console.log('$root.buttoncolor: ', this.$root.buttoncolor)
-        this.selectedTab = this.$route.name
-        console.log('mounted: ', this.activeTab)
-        var tokensNames = require('./json/tokens.json').data.page
-        tokensNames.map((token) => {
-            const [name, ext] = token.primaryCommunityImageName.split(".");
-            this.$store.state.tokens.push({
-                "tokenName": token.name,
-                "tokenCode": token.code,
-                "tokenID": token.id,
-                "tokenCommunityID": token.primaryCommunityId,
-                "tokenImage": `https://storage.googleapis.com/bancor-prod-file-store/images/communities/cache/${name}_200w.${ext}`
-            })
-        })
-        console.log(this.$store.state.tokens)
+        this.init()
     },
     methods: {
+        setGasPrice(price) {
+            this.$store.state.gasPrice = price;
+            console.log('changed Gas Price: ', price)
+        },
+        init: async function () {
+            console.log('$root.buttoncolor: ', this.$root.buttoncolor)
+            this.selectedTab = this.$route.name
+            console.log('mounted: ', this.activeTab)
+            var tokensNames = require('./json/tokens.json').data.page
+            this.tokens = await Promise.resolve(this.getConvertibleTokens())
+            tokensNames.map((token) => {
+                const [name, ext] = token.primaryCommunityImageName.split(".");
+                this.$store.state.tokens.push({
+                    "tokenName": token.name,
+                    "tokenCode": token.code,
+                    "tokenID": token.id,
+                    "tokenCommunityID": token.primaryCommunityId,
+                    "tokenImage": `https://storage.googleapis.com/bancor-prod-file-store/images/communities/cache/${name}_200w.${ext}`
+                })
+            })
+            this.tokens.map(async (address) => {
+                var token = await Promise.resolve(this.getTokenData(address))
+                var index = this.$store.state.tokens.findIndex((item) => {
+                    return token.symbol === item.tokenCode
+                })
+                console.log('index: ', index, ' address: ', address)
+                if (index > -1) {
+                    this.$store.state.tokens[index].address = address
+                }
+            })
+            this.$store.state.tokens = this.$store.state.tokens.filter((token) => {
+                console.log('token: ', token)
+                return token.address
+            })
+            console.log(this.$store.state.tokens)
+        },
+        getTokenData: async function (address) {
+            return new Promise(async (resolve, reject) => {
+                var token = new this.$store.state.web3.eth.Contract(this.$store.state.erc20.abi, address)
+                var [name, symbol, decimals] = await Promise.all([token.methods.name().call(),
+                    token.methods.symbol().call(),
+                    token.methods.decimals().call()
+                ])
+                resolve({
+                    "name": name,
+                    "symbol": symbol,
+                    "decimals": decimals
+                })
+            })
+        },
+        getConvertibleTokens: async function () {
+            return new Promise((resolve, reject) => {
+                this.$store.state.bancorRegistry.methods.getConvertibleTokens().call({
+                    from: this.$store.state.web3.eth.defaultAccount,
+                    gas: this.$store.state.currentGas
+                }).then((tokens, error) => {
+                    console.log('tokens: ', tokens)
+                    if (tokens) {
+                        resolve(tokens)
+                    }
+                }).catch((error) => {
+                    resolve([])
+                    console.error('error: ', error)
+                })
+            })
+        },
         showWarning() {
-            this.warning(`Attention: this application uses local storage for storing parameters. Please do not delete your browser history before completing all steps. Please do not proceed to the next step until your current transaction is confirmed in your wallet. Please do not speed up transactions after confirming them in your wallet.`)
+            this.warning(`Attention: Do not referesh page whilst waiting for a transaction to complete.`)
             this.showMenu = !this.showMenu
         },
         warning(message) {
