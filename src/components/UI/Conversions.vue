@@ -32,7 +32,7 @@
                 </v-card-text>
                 <v-row no-gutters>
                     <v-col>
-                        <v-text-field  label="Receive" v-model="receive" :loading="loading" type="number" :value="receive" required></v-text-field>
+                        <v-text-field label="Receive" v-model="receive" :loading="loading" type="number" :value="receive" required></v-text-field>
                     </v-col>
                     <v-tooltip top>
                         <template v-slot:activator="{ on }">
@@ -107,6 +107,7 @@
 <script>
 import request from 'request'
 import tokenInfo from './TokenInfo'
+import bancor from 'bancor-sdk'
 export default {
     components: {
         tokenInfo
@@ -136,10 +137,8 @@ export default {
 }
 </script>
 
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
-
-<style>
-.v-label{
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style><style>
+.v-label {
     font-size: 15px;
 }
 </style>

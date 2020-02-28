@@ -5,9 +5,8 @@
     <v-content>
         <!-- Provides the application the proper gutter -->
         <v-container fluid>
-            <v-btn absolute dark fab bottom right :color="$root.buttoncolor?$root.buttoncolor:$store.state.defualtColor" @click="showMenu=!showMenu; showWarning">
-                <v-icon :v-model="$root.buttonicon?$root.buttonicon:$store.state.defualtIcon">
-                    {{$root.buttonicon?$root.buttonicon:$store.state.defualtIcon}}</v-icon>
+            <v-btn absolute dark fab bottom right :color="$root.buttoncolor?$root.buttoncolor:$store.state.defualtColor" @click="showMenu=!showMenu">
+                <v-icon :v-model="$root.buttonicon?$root.buttonicon:$store.state.defualtIcon">{{$root.buttonicon?$root.buttonicon:$store.state.defualtIcon}}</v-icon>
             </v-btn>
             <!-- If using vue-router -->
             <v-dialog v-model="showMenu" fullscreen hide-overlay transition="dialog-bottom-transition">
@@ -24,15 +23,10 @@
                     </v-toolbar>
                     <v-card-text>
                         <v-tabs v-model="selectedTab" background-color="white" :color="$root.widgetcolor?$root.widgetcolor:$store.state.defualtColor" right>
-                            <v-tab>Pools</v-tab>
-                            <v-tab>Create Liquidity Pool</v-tab>
+                            <v-tab v-for="(tab,i) in tabs" :key="i" href :to="tab.to">{{tab.title}}</v-tab>
                         </v-tabs>
                         <v-tabs-items v-model="selectedTab">
-                            <v-tab-item>
-                                <pools></pools>
-                            </v-tab-item>
-                            <v-tab-item>
-                                <create></create>
+                            <v-tab-item v-for="(tab_,i) in tabs" :key="i" :value="tab_  .to">
                             </v-tab-item>
                         </v-tabs-items>
                         <router-view></router-view>
@@ -53,9 +47,7 @@
                             </v-btn>
                         </v-btn-toggle>
                         <v-card-text>
-                            For faster completion, increase the gas price in your waller after clicking our action
-                            buttons, but before confirming transactions in your wallet <a href="https://metamask.zendesk.com/hc/en-us/articles/360015488771-How-to-Adjust-Gas-Price-and-Gas-Limit-">See
-                                how</a>
+                            For faster completion, increase the gas price in your waller after clicking our action buttons, but before confirming transactions in your wallet <a href="https://metamask.zendesk.com/hc/en-us/articles/360015488771-How-to-Adjust-Gas-Price-and-Gas-Limit-">See how</a>
                         </v-card-text>
                     </v-card>
                 </v-card>
@@ -70,15 +62,8 @@
 
 <script>
 import swal from 'sweetalert2'
-import Pools from "./components/UI/AddRemoveLiquidity";
-import Create from "./components/UI/CreatePool";
-
 export default {
     props: ['widgetcolor', 'buttoncolor', 'buttonicon'],
-    components: {
-        Pools,
-        Create
-    },
     data() {
         return {
             activeTab: '',
@@ -87,6 +72,9 @@ export default {
             tabs: [{
                     "title": "Pools",
                     "to": "/addremove"
+                }, {
+                    "title": "Conversions",
+                    "to": "/conversions"
                 },
                 {
                     "title": "Create Liquidity Pool",
@@ -109,16 +97,44 @@ export default {
         },
         init: async function () {
             console.log('$root.buttoncolor: ', this.$root.buttoncolor)
+            this.store.state.bancor = await bancor.init({
+                // optional, mandatory when interacting with the ethereum mainnet
+                ethereumNodeEndpoint: "https://mainnet.infura.io/v3/ec2c4801bcf44d9daa49f2e541851706"
+            });
             this.selectedTab = this.$route.name
             console.log('mounted: ', this.activeTab)
-            this.$store.state.tokens = require('./json/tokens.json').tokens
-            console.log('tokens: ', this.$store.state.tokens)
-            this.showWarning()
+            var tokensNames = require('./json/tokens.json').data.page
+            this.tokens = await Promise.resolve(this.getConvertibleTokens())
+            tokensNames.map((token) => {
+                const [name, ext] = token.primaryCommunityImageName.split(".");
+                this.$store.state.tokens.push({
+                    "tokenName": token.name,
+                    "tokenCode": token.code,
+                    "tokenID": token.id,
+                    "tokenCommunityID": token.primaryCommunityId
+                    //,"tokenImage": `https://storage.googleapis.com/bancor-prod-file-store/images/communities/cache/${name}_200w.${ext}`
+                })
+                
+            })
+            this.tokens.map(async (address) => {
+                var token = await Promise.resolve(this.getTokenData(address))
+                var index = this.$store.state.tokens.findIndex((item) => {
+                    return token.symbol === item.tokenCode
+                })
+                console.log('index: ', index, ' address: ', address)
+                if (index > -1) {
+                    this.$store.state.tokens[index].address = address
+                }
+            })
+            this.$store.state.tokens = this.$store.state.tokens.filter((token) => {
+                console.log('token: ', token)
+                return token.address
+            })
+            console.log(this.$store.state.tokens)
         },
         getTokenData: async function (address) {
             return new Promise(async (resolve, reject) => {
-                var token = new this.$store.state.web3.eth.Contract(this.$store.state.erc20.abi,
-                    address)
+                var token = new this.$store.state.web3.eth.Contract(this.$store.state.erc20.abi, address)
                 var [name, symbol, decimals] = await Promise.all([token.methods.name().call(),
                     token.methods.symbol().call(),
                     token.methods.decimals().call()

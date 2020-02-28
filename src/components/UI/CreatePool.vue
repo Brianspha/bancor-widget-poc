@@ -30,6 +30,8 @@
                 <v-text-field v-model="tokenAddress" :counter="42" :rules="addressRules" label="Token Address" required></v-text-field>
             </v-form>
             <v-btn :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" @click="validateTokenAddress">Continue</v-btn>
+            <v-btn :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" @click="e6--" text>Back</v-btn>
+
         </v-stepper-content>
         <v-stepper-step :complete="e6 > 3" step="3" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor">Converter Deployment
         </v-stepper-step>
@@ -39,9 +41,9 @@
                     Smart token address from previous step,<br /> Bancor registry contract address,<br /> Max Fee: 30000 (3%),<br /> Weight: 500,000 (50%)
                 </v-card-text>
                 <v-form ref="form">
-                    <v-text-field :v-model="$store.state.deployedRelayTokenData.symbol" :value="$store.state.deployedRelayTokenData.symbol" label="Token Symbol" readonly></v-text-field>
+                    <v-text-field :v-model="$store.state.deployedRelayTokenData.relaySymbol" :value="$store.state.deployedRelayTokenData.relaySymbol" label="Token Symbol" readonly></v-text-field>
                     <v-text-field :v-model="$store.state.deployedRelayTokenData.registry" :value="$store.state.contractRegistryAddress" label="Bancor Token Registry" readonly></v-text-field>
-                    <v-text-field v-model="$store.state.maxFee" :value="$store.state.maxFee" :rules="maxFeeRules" readonly></v-text-field>
+                    <v-text-field v-model="$store.state.maxFee" label="Max Fee" :value="$store.state.maxFee" :rules="maxFeeRules" readonly></v-text-field>
                     <v-text-field :v-model="$store.state.deployedRelayTokenData.address" label="Deployed Relay Token" :value="$store.state.deployedRelayTokenData.address" readonly></v-text-field>
                     <v-text-field :v-model="$store.state.converterWeight" :value="$store.state.converterWeight" label="Converter Weight" readonly></v-text-field>
                 </v-form>
@@ -132,7 +134,7 @@
             <v-btn :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" @click="addToTokenRegistry">Finish</v-btn>
         </v-stepper-content>
     </v-stepper>
-    
+
     <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="true"></loading>
 </v-container>
 </template>
@@ -184,13 +186,20 @@ export default {
             bntTransfer: '',
             initialPrice: 0,
             totalBNT: 0,
-            connectorAddress: ''
+            connectorAddress: '',
+            connectorContract: {}
         }
     },
     watch: {
         selectedPrefix: function (val) {
             console.log('selection connector type: ', val)
-            this.connectorAddress = val === 'USDB' ? this.$store.state.usdbAddress : this.$store.state.bntAddress
+            if (val === 'USDB') {
+                this.connectorAddress = this.$store.state.usdbAddress
+                this.connectorContract = this.$store.state.usdbToken
+            } else {
+                this.connectorAddress = this.$store.state.bntAddress
+                this.connectorContract = this.$store.state.bntToken
+            }
         }
     },
     mounted() {
@@ -296,10 +305,6 @@ export default {
         },
         checkIfTokenRegistered(tokenAddresses, ratios) {
             this.isLoading = true
-            /* console.log('config: ', tokenAddresses, ' ratios: ', ratios)
-             console.warn('this.$store.state.bancorRegistryABI: ', this.$store.state.bancorRegistryABI)
-             var contract = new this.$store.state.web3.eth.Contract(this.$store.state.bancorRegistryABI, this.$store.state.bancorRegistry.address)
-             console.warn('warn: ', contract)*/
             return new Promise((resolve, reject) => {
                 this.$store.state.bancorRegistry.methods.getLiquidityPoolByReserveConfig(tokenAddresses, ratios).call({
                     gas: 8000000
@@ -333,13 +338,29 @@ export default {
                 if (receipt) {
                     console.log('deployedConverter: ', receipt)
                     this.deployedConverter = receipt
-                    this.e6++
+                    this.addReserve()
                 }
                 this.isLoading = false
             }).catch((error) => {
                 console.error('error: ', error)
                 this.error('Something went wrong whilst deploying coverter contract please set a higher gas price')
                 this.isLoading = false
+            })
+        },
+        addReserve() {
+            this.deployedConverter.methods.addReserve(this.tokenAddress, this.$store.state.converterWeight).send({
+                gas: this.$store.state.currentGas,
+                from: this.$store.state.web3.eth.defaultAccount
+            }).then((receipt, error) => {
+                if (receipt) {
+                    this.e6++
+                }
+                console.log('added reserve: ', receipt)
+                this.isLoading = false
+            }).catch((error) => {
+                this.isLoading = false
+                this.error('Something went wrong')
+                console.error('error: ', error)
             })
         },
         setConversionFee() {
@@ -376,7 +397,7 @@ export default {
         },
         transferTotalBNT() {
             this.isLoading = true
-            this.erc20Token.methods.transfer(this.deployedConverter._address, this.totalBNT).send({
+            this.connectorContract.methods.transfer(this.deployedConverter._address, this.totalBNT).send({
                 gas: this.$store.state.currentGas,
                 from: this.$store.state.web3.eth.defaultAccount
             }).then(async (receipt, error) => {

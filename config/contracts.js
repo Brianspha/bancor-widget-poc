@@ -42,7 +42,17 @@ module.exports = {
             BancorNetwork: {
                 args: [
                     "$ContractRegistry"
-                ]
+                ],
+                onDeploy: async ({
+                    contracts,
+                    web3,
+                    logger
+                }) => {
+                    console.log('contracts: ', contracts)
+                    await contracts.ContractRegistry.methods.registerAddress(web3.utils.fromAscii("BancorNetwork"), contracts.BancorNetwork.address).send({
+                        gas: 6000000
+                    })
+                }
             },
             BancorNetworkPathFinder: {
                 args: [
@@ -67,16 +77,16 @@ module.exports = {
             USDB: {
                 instanceOf: 'ERC20Token',
                 args: [
-                    'Bancor USD Token', 'USDB', 18, 18000000000
+                    'Bancor USD Token', 'USDB', 18, 15000000000
                 ]
             },
             BNT: {
                 instanceOf: 'ERC20Token',
-                args: ['Bancor', 'BNT', 18, 18000000000]
+                args: ['Bancor', 'BNT', 18, 15000000000]
             },
             DBToken: {
                 instanceOf: 'ERC20Token',
-                args: ['DBToken', 'DBT', 18, 18000000000]
+                args: ['DBToken', 'DBT', 18, 15000000000]
 
             },
             XTransferRerouter: {
@@ -140,8 +150,44 @@ module.exports = {
                     'SphaToken', 'ST'
                 ]
             },
-            NonStandardERC20Token: {
-                args: ['SphaToken', 'ST', 18]
+            ContractFeatures:{
+                args:[],
+                onDeploy: async ({
+                    contracts,
+                    web3,
+                    logger
+                }) => {
+                    console.log('contracts: ', contracts)
+                    await contracts.ContractRegistry.methods.registerAddress(web3.utils.fromAscii("ContractFeatures"), contracts.ContractFeatures.address).send({
+                        gas: 6000000
+                    })
+                }
+            },
+            BancorFormula:{
+                args:[],
+                onDeploy: async ({
+                    contracts,
+                    web3,
+                    logger
+                }) => {
+                    console.log('contracts: ', contracts)
+                    await contracts.ContractRegistry.methods.registerAddress(web3.utils.fromAscii("BancorFormula"), contracts.BancorFormula.address).send({
+                        gas: 6000000
+                    })
+                }
+            },
+            BancorConverterFactory:{
+                args:[],
+                onDeploy: async ({
+                    contracts,
+                    web3,
+                    logger
+                }) => {
+                    console.log('contracts: ', contracts)
+                    await contracts.ContractRegistry.methods.registerAddress(web3.utils.fromAscii("BancorConverterFactory"), contracts.BancorConverterFactory.address).send({
+                        gas: 6000000
+                    })
+                }
             }
         },
         /*afterDeploy: async (dependencies) => {
