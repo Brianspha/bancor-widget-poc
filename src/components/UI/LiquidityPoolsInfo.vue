@@ -1,6 +1,6 @@
 <template>
 <div class="text-center">
-    <v-dialog v-model="modal" width="700">
+    <v-dialog v-model="$store.state.liquidityInfo " width="700">
         <v-card>
             <v-card-title class="headline grey lighten-2" primary-title>
                 About Bancor Luquidity Pools
@@ -11,7 +11,7 @@
             <v-divider></v-divider>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn :color="$root.widgetColor? $root.widgetColor:$store.state.defualtColor" text @click="hideModal">
+                <v-btn :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" text @click="hideModal">
                     Close
                 </v-btn>
             </v-card-actions>
@@ -29,10 +29,7 @@ export default {
         }
     },
     watch: {
-        "$store.state.infoModal": function (val) {
-            this.modal = val
-            console.log('val in info: ', val)
-        }
+
     },
     mounted() {
         this.initInfo()
@@ -49,7 +46,7 @@ export default {
             })
         },
         hideModal() {
-            this.$store.state.infoModal = false
+            this.$store.state.liquidityInfo = false
         }
     }
 }

@@ -5,7 +5,7 @@
     <v-content>
         <!-- Provides the application the proper gutter -->
         <v-container fluid>
-            <v-btn absolute dark fab bottom right :color="$root.buttoncolor?$root.buttoncolor:$store.state.defualtColor" @click="showMenu=!showMenu; showWarning">
+            <v-btn absolute dark fab bottom right :color="$root.buttoncolor?$root.buttoncolor:$store.state.defualtColor" @click="showWarning()">
                 <v-icon :v-model="$root.buttonicon?$root.buttonicon:$store.state.defualtIcon">
                     {{$root.buttonicon?$root.buttonicon:$store.state.defualtIcon}}</v-icon>
             </v-btn>
@@ -113,7 +113,7 @@ export default {
             console.log('mounted: ', this.activeTab)
             this.$store.state.tokens = require('./json/tokens.json').tokens
             console.log('tokens: ', this.$store.state.tokens)
-            this.showWarning()
+
         },
         getTokenData: async function (address) {
             return new Promise(async (resolve, reject) => {

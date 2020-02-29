@@ -6,6 +6,7 @@ web3 = new Web3("https://mainnet.infura.io/v3/ec2c4801bcf44d9daa49f2e541851706")
 console.warn('web3: ', web3.providers)
 export default new Vuex.Store({
   state: {
+    etherScan:'https://etherscan.io/',
     bancor:{},
     removeLiquidity:{},
     web3: web3,

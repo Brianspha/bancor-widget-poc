@@ -1,3 +1,4 @@
+const bigNumber = require('bignumber.js')
 module.exports = {
     // default applies to all environments
     default: {
@@ -77,16 +78,26 @@ module.exports = {
             USDB: {
                 instanceOf: 'ERC20Token',
                 args: [
-                    'Bancor USD Token', 'USDB', 18, 15000000000
+                    'Bancor USD Token', 'USDB', 18, new bigNumber(50000000000000000000000000000).toFixed()
                 ]
             },
             BNT: {
                 instanceOf: 'ERC20Token',
-                args: ['Bancor', 'BNT', 18, 15000000000]
+                args: ['Bancor', 'BNT', 18, new bigNumber(50000000000000000000000000000).toFixed()]
             },
             DBToken: {
                 instanceOf: 'ERC20Token',
-                args: ['DBToken', 'DBT', 18, 15000000000]
+                args: ['DBToken', 'DBT', 18, new bigNumber(50000000000000000000000000000).toFixed()]
+
+            },
+            DBZToken: {
+                instanceOf: 'ERC20Token',
+                args: ['DBZToken', 'DBZT', 18, new bigNumber(50000000000000000000000000000).toFixed()]
+
+            },
+            NBAToken: {
+                instanceOf: 'ERC20Token',
+                args: ['NBAToken', 'NBAT', 18, new bigNumber(50000000000000000000000000000).toFixed()]
 
             },
             XTransferRerouter: {
@@ -150,8 +161,8 @@ module.exports = {
                     'SphaToken', 'ST'
                 ]
             },
-            ContractFeatures:{
-                args:[],
+            ContractFeatures: {
+                args: [],
                 onDeploy: async ({
                     contracts,
                     web3,
@@ -163,8 +174,8 @@ module.exports = {
                     })
                 }
             },
-            BancorFormula:{
-                args:[],
+            BancorFormula: {
+                args: [],
                 onDeploy: async ({
                     contracts,
                     web3,
@@ -176,8 +187,8 @@ module.exports = {
                     })
                 }
             },
-            BancorConverterFactory:{
-                args:[],
+            BancorConverterFactory: {
+                args: [],
                 onDeploy: async ({
                     contracts,
                     web3,

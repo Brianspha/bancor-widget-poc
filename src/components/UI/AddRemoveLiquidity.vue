@@ -3,17 +3,16 @@
     <v-form ref="form" v-model="valid" lazy-validation>
         <v-select outlined v-model="selectedActions" :items="actions" :item-text="selectedActions" :rules="selectRules" label="Action" return-object required></v-select>
         <v-select outlined v-model="selectedToken" :items="$store.state.tokens" item-text="symbol" item-value="symbol" :rules="selectRules" label="Token Name" required></v-select>
-        <v-text-field :label="currentPlaceHolder" :placeholder="currentPlaceHolder" v-model="tokenAmount" type="number" outlined></v-text-field>
+        <v-text-field :label="currentPlaceHolder" :placeholder="currentPlaceHolder" v-model="tokenAmount" type="number" :rules="numberRules" outlined></v-text-field>
         <v-text-field v-if="!$store.state.wallectConnected" class="headline" style="font-weight: bold; color:black;" v-modal="warningText" loading="error" :placeholder="warningText" outlined disabled></v-text-field>
-        <v-btn :disabled="!valid" :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" @click="validate">
+        <v-btn  :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" @click="validate">
             {{buttonContent}}
         </v-btn>
         <v-icon :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" @click="showInfo">
             {{$store.state.defaultInfoIcon}}
         </v-icon>
     </v-form>
-    <aboutLiquidityModal v-bind:modal="$store.state.infoModal"></aboutLiquidityModal>
-    <createLiquidityInfoModal v-bind:modal="$store.state.liquidityInfo"></createLiquidityInfoModal>
+    <aboutLiquidityModal></aboutLiquidityModal>
     <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="true"></loading>
 </v-container>
 </template>
@@ -34,6 +33,7 @@ export default {
             selectedToken: '',
             selectedAction: '',
             selectRules: [v => !!v || 'Select Item is required'],
+            numberRules: [v => !!v || 'Number is required', v => v && !isNaN(v) && v > 0 || 'Invalid number, number must be greater than 0'],
             select: null,
             checkbox: false,
             warningText: "Please connect your wallet",
@@ -47,11 +47,11 @@ export default {
     },
     components: {
         aboutLiquidityModal,
-        createLiquidityInfoModal,
         Loading
     },
     watch: {
         selectedActions: function (val) {
+            this.selectedAction = val
             if (val === 'Remove Liquidity') {
                 this.currentPlaceHolder = 'Amount to Liquidate'
                 this.buttonContent = "Liquidate"
@@ -98,10 +98,11 @@ export default {
             this.isLoading = true
             var balance = await Promise.resolve(this.getUserBalance())
             console.log(`userBalance: ${balance}`)
-            var amount = this.toWei(this.tokenAmount, this.token.tokenDecimals)
+            var amount = this.toWei(this.tokenAmount, this.token.decimals)
             if (balance <= 0 || amount <= balance) {
                 this.error(`Seems like you have an insuficient balance of: ${this.token.symbol}`)
                 this.isLoading = false
+                this.tokenAmount = 0
             } else {
                 this.$store.state.removeLiquidity.balance = balance
                 var contract = new this.$store.state.web3.eth.Contract(this.$store.state.converterData.abi, this.token.converterAddress)
@@ -114,49 +115,92 @@ export default {
                     console.log('receipt: ', receipt)
                     if (receipt) {
                         this.success("Succesfully liquidated pool")
+                        this.tokenAmount = 0
                     }
                     this.isLoading = false
                 }).catch((error) => {
                     this.error("Something went wrong, either you are not the owner or ran out of gas")
                     this.isLoading = false
                     console.error('error: ', error)
+                    this.tokenAmount = 0
                 })
-                this.isLoading = false
             }
         },
         toWei(amount, decimals) {
-            amount = new bigNumber(amount, decimals)
-            amount = amount.multipliedBy(new bigNumber(10).pow(decimals))
-            return amount.tofixed()
+            var newAmount = new bigNumber(amount, decimals)
+            console.log('newAmount: ', newAmount)
+            newAmount = newAmount.multipliedBy(new bigNumber(10).pow(decimals)).toFixed()
+            console.log('newAmount after toFixed: ', newAmount)
+            return newAmount
         },
-        addLiquidity() {
-
+        addLiquidity: async function () {
+            var balance = await Promise.resolve(this.getUserBalance())
+            this.tokenAmount = new bigNumber(this.tokenAmount).multipliedBy(new bigNumber(10).pow(new bigNumber(this.token.decimals))).toFixed()
+            if (balance >= this.tokenAmount) {
+                var contract = this.getReserveTokenContract()
+                console.log('this,tokenAmount: ', this.tokenAmount)
+                contract.methods.approve(this.token.converterAddress, this.tokenAmount).send({
+                    gas: this.$store.state.currentGas,
+                    from: this.$store.state.web3.eth.defaultAccount
+                }).then(async (receipt, error) => {
+                    if (receipt) {
+                        this.fund()
+                    }
+                }).catch((error) => {
+                    this.error('Something went wrong whilst approving liquidity pool fund transfer')
+                    console.error('Something went wrong whilst approving liquidity pool fund transfer')
+                    this.isLoading = false
+                    this.tokenAmount = 0
+                })
+            } else {
+                this.error(`Seems like you have insufficient: ${this.token.symbol}`)
+            }
         },
-        calculateUserPercent: async function (share, smartTokenSupply) {
+        fund: async function () {
+            var contract = this.getConverterContract()
+            contract.methods.fund(this.tokenAmount).send({
+                gas: this.$store.state.currentGas,
+                gasPrice: this.$store.state.gasPrice,
+                from: this.$store.state.web3.eth.defaultAccount
+            }).then(async (receipt, error) => {
+                contract = this.getReserveTokenContract()
+                var totalSupply = await contract.methods.totalSupply().call({
+                    gas: this.$store.state.currentGas,
+                    gasPrice: this.$store.state.gasPrice,
+                    from: this.$store.state.web3.eth.defaultAccount
+                })
+                var balance = await Promise.resolve(this.getUserBalance())
+                balance = new bigNumber(balance)
+                totalSupply = new bigNumber(totalSupply)
+                const share = this.calculateUserPercent(balance, totalSupply)
+                if (receipt) {
+                    this.success(`Succesfully funded liqudity pool \n Your current share ${share} of ${this.token.relayTokensymbol} \n of the total ${this.totalSupply}`)
+                }
+                this.isLoading = false
+            }).catch((error) => {
+                this.error('Something went wrong whilst funding liquidity pool')
+                console.error('Something went wrong whilst funding liquidity pool')
+                this.isLoading = false
+                this.tokenAmount = 0
+            })
+        },
+        getReserveTokenContract() {
+            return new this.$store.state.web3.eth.Contract(this.$store.state.smartTokenABI, this.token.tokenAddress)
+        },
+        getConverterContract() {
+            return new this.$store.state.web3.eth.Contract(this.$store.state.converterData.abi, this.token.converterAddress)
+        },
+        calculateUserPercent: async function (currentshare, smartTokenSupply) {
             var percent = smartTokenSupply.dividedBy(100)
-            var userShare = percent.dividedBy(share)
+            var userShare = percent.dividedBy(currentshare)
             var totalUserpercent = new bigNumber(1).dividedBy(userShare)
             return userPercent.tofixed()
         },
-        getBntConnector: async function () {
-            const converterAddress = this.getTokenBySymbol('BNT')
-            var converter = new this.$store.state.web3.eth.Contract(this.$store.state.converterData.abi, converterAddress)
-            const connectorAddress = await converter.methods.connectorTokens(0).call()
-            const contract = new this.$store.state.web3.eth.Contract(this.$store.state.smartTokenABI, connectorAddress)
-            const symbol = await contract.methods.symbol().call()
-            return symbol;
-        },
-        getTokenBySymbol(symbol) {
-            var tokens = this.$store.state.tokens.filter((token) => {
-                return token.symbol === symbol
-            })
-            return tokens[0]
-        },
         getUserBalance: async function () {
             return new Promise(async (resolve, reject) => {
-                const smartToken = new this.$store.state.web3.eth.Contract(this.$store.state.smartTokenABI, this.token.smartTokenAddress)
+                const smartToken = this.getReserveTokenContract()
                 let userBalance = await smartToken.methods.balanceOf(this.$store.state.web3.eth.defaultAccount).call()
-                userBalance = this.$store.state.web3.utils.hexToNumber(userBalance._hex)
+                // userBalance = this.$store.state.web3.utils.hexToNumber(userBalance._hex)
                 resolve(userBalance)
             })
 
