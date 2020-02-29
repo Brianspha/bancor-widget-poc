@@ -1,23 +1,33 @@
 <template>
-<div class="text-center">
-    <v-dialog v-model="$store.state.liquidityInfo " width="700">
-        <v-card>
-            <v-card-title class="headline grey lighten-2" primary-title>
-                About Bancor Luquidity Pools
-            </v-card-title>
-            <v-card-text style="font-weight: bold; white-space: pre-line;">
-                {{about}}
-            </v-card-text>
-            <v-divider></v-divider>
-            <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" text @click="hideModal">
-                    Close
-                </v-btn>
-            </v-card-actions>
-        </v-card>
+  <div class="text-center">
+    <v-dialog
+      v-model="$store.state.liquidityInfo "
+      width="700"
+    >
+      <v-card>
+        <v-card-title
+          class="headline grey lighten-2"
+          primary-title
+        >
+          About Bancor Luquidity Pools
+        </v-card-title>
+        <v-card-text style="font-weight: bold; white-space: pre-line;">
+          {{ about }}
+        </v-card-text>
+        <v-divider />
+        <v-card-actions>
+          <v-spacer />
+          <v-btn
+            :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor"
+            text
+            @click="hideModal"
+          >
+            Close
+          </v-btn>
+        </v-card-actions>
+      </v-card>
     </v-dialog>
-</div>
+  </div>
 </template>
 
 <script>

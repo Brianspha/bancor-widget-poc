@@ -29,201 +29,21 @@ module.exports = {
         // Using filteredFields lets you customize which field you want to filter out of the contract file (requires minimalContractSize: true)
         // minimalContractSize: false,
         // filteredFields: [],
-
+        strategy: 'explicit',
         deploy: {
-            SmartToken: {
-                args: ['SphaToken', 'ST', 18]
-            },
-            SmartTokenController: {
-                args: ["$SmartToken"]
-            },
-            ContractRegistry: {
-                args: []
-            },
-            BancorNetwork: {
-                args: [
-                    "$ContractRegistry"
-                ],
-                onDeploy: async ({
-                    contracts,
-                    web3,
-                    logger
-                }) => {
-                    console.log('contracts: ', contracts)
-                    await contracts.ContractRegistry.methods.registerAddress(web3.utils.fromAscii("BancorNetwork"), contracts.BancorNetwork.address).send({
-                        gas: 6000000
-                    })
-                }
-            },
-            BancorNetworkPathFinder: {
-                args: [
-                    "$ContractRegistry"
-                ]
-            },
-            BancorX: {
-                args: [
-                    "1000000000000000000000",
-                    "1000000000000000000000",
-                    "1000000000000000000",
-                    "1000000000000000000",
-                    "10000000000000000000",
-                    "$ContractRegistry",
-                    "$SmartToken",
-                    true,
-                ]
-            },
-            ERC20Token: {
-                deploy: false,
-            },
             USDB: {
-                instanceOf: 'ERC20Token',
-                args: [
-                    'Bancor USD Token', 'USDB', 18, new bigNumber(50000000000000000000000000000).toFixed()
-                ]
-            },
+                address: '0x309627af60f0926daa6041b8279484312f2bf060',
+                abiDefinition: [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"_name","type":"string"},{"name":"_symbol","type":"string"},{"name":"_decimals","type":"uint8"},{"name":"_totalSupply","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_owner","type":"address"},{"indexed":true,"name":"_spender","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Approval","type":"event"}]
+              },
             BNT: {
-                instanceOf: 'ERC20Token',
-                args: ['Bancor', 'BNT', 18, new bigNumber(50000000000000000000000000000).toFixed()]
-            },
-            DBToken: {
-                instanceOf: 'ERC20Token',
-                args: ['DBToken', 'DBT', 18, new bigNumber(50000000000000000000000000000).toFixed()]
-
-            },
-            DBZToken: {
-                instanceOf: 'ERC20Token',
-                args: ['DBZToken', 'DBZT', 18, new bigNumber(50000000000000000000000000000).toFixed()]
-
-            },
-            NBAToken: {
-                instanceOf: 'ERC20Token',
-                args: ['NBAToken', 'NBAT', 18, new bigNumber(50000000000000000000000000000).toFixed()]
-
-            },
-            XTransferRerouter: {
-                args: [true]
-            },
-            BancorConverter: {
-                args: [
-                    "$SmartToken",
-                    "$ContractRegistry",
-                    5000,
-                    "$ERC20Token",
-                    25000
-                ]
+                address: '0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C',
+                abiDefinition: [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"_name","type":"string"},{"name":"_symbol","type":"string"},{"name":"_decimals","type":"uint8"},{"name":"_totalSupply","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_owner","type":"address"},{"indexed":true,"name":"_spender","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Approval","type":"event"}]
             },
             BancorConverterRegistry: {
-                args: [
-                    "$ContractRegistry"
-                ],
-                onDeploy: async ({
-                    contracts,
-                    web3,
-                    logger
-                }) => {
-                    console.log('contracts: ', contracts)
-                    await contracts.ContractRegistry.methods.registerAddress(web3.utils.fromAscii("BancorConverterRegistry"), contracts.BancorConverterRegistry.address).send({
-                        gas: 6000000
-                    })
-                }
-            },
-            BancorConverterUpgrader: {
-                args: [
-                    "$ContractRegistry"
-                ]
-            },
-            BancorConverterRegistryData: {
-                args: [
-                    "$ContractRegistry"
-                ],
-                onDeploy: async ({
-                    contracts,
-                    web3,
-                    logger
-                }) => {
-                    console.log('contracts: ', contracts)
-                    await contracts.ContractRegistry.methods.registerAddress(web3.utils.fromAscii("BancorConverterRegistryData"), contracts.BancorConverterRegistryData.address).send({
-                        gas: 6000000
-                    })
-                }
-            },
-            CrowdsaleController: {
-                args: [
-                    "$SmartToken",
-                    Math.floor(Date.now() / 1000) + 30 * 24 * 60 * 60,
-                    "0xa90a9f6b165c1cb56081eb03c2bf57ed9fbd0f5a",
-                    "0x07063c6c47d24923e6a4368f2f95b4bd73ccb6e4",
-                    "0xd3a40f1165164f13f237cc938419cc292e66b7bb3aa190f21087a3813c5ae1ca"
-                ]
-            },
-            EtherToken: {
-                args: [
-                    'SphaToken', 'ST'
-                ]
-            },
-            ContractFeatures: {
-                args: [],
-                onDeploy: async ({
-                    contracts,
-                    web3,
-                    logger
-                }) => {
-                    console.log('contracts: ', contracts)
-                    await contracts.ContractRegistry.methods.registerAddress(web3.utils.fromAscii("ContractFeatures"), contracts.ContractFeatures.address).send({
-                        gas: 6000000
-                    })
-                }
-            },
-            BancorFormula: {
-                args: [],
-                onDeploy: async ({
-                    contracts,
-                    web3,
-                    logger
-                }) => {
-                    console.log('contracts: ', contracts)
-                    await contracts.ContractRegistry.methods.registerAddress(web3.utils.fromAscii("BancorFormula"), contracts.BancorFormula.address).send({
-                        gas: 6000000
-                    })
-                }
-            },
-            BancorConverterFactory: {
-                args: [],
-                onDeploy: async ({
-                    contracts,
-                    web3,
-                    logger
-                }) => {
-                    console.log('contracts: ', contracts)
-                    await contracts.ContractRegistry.methods.registerAddress(web3.utils.fromAscii("BancorConverterFactory"), contracts.BancorConverterFactory.address).send({
-                        gas: 6000000
-                    })
-                }
+        address:'0x52Ae12ABe5D8BD778BD5397F99cA900624CfADD4',
+        abiDefinition:[{"constant":false,"inputs":[{"name":"_adminOnly","type":"bool"}],"name":"restrictRegistryUpdate","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getSmartTokens","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_smartTokens","type":"address[]"}],"name":"getConvertersBySmartTokens","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_value","type":"address"}],"name":"isConvertibleToken","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_value","type":"address"}],"name":"isSmartToken","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"updateRegistry","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getConvertibleTokens","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"prevRegistry","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getConvertibleTokenCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_converter","type":"address"}],"name":"addConverter","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_convertibleToken","type":"address"},{"name":"_value","type":"address"}],"name":"isConvertibleTokenSmartToken","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"acceptOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getLiquidityPoolCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"registry","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getLiquidityPools","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_reserveTokens","type":"address[]"},{"name":"_reserveRatios","type":"uint256[]"}],"name":"getLiquidityPoolByReserveConfig","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_index","type":"uint256"}],"name":"getConvertibleToken","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_converter","type":"address"}],"name":"isConverterValid","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_converter","type":"address"}],"name":"removeConverter","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_index","type":"uint256"}],"name":"getSmartToken","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_convertibleToken","type":"address"}],"name":"getConvertibleTokenSmartTokenCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_index","type":"uint256"}],"name":"getLiquidityPool","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"restoreRegistry","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"adminOnly","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"newOwner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_convertibleToken","type":"address"},{"name":"_index","type":"uint256"}],"name":"getConvertibleTokenSmartToken","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getSmartTokenCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_value","type":"address"}],"name":"isLiquidityPool","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_convertibleToken","type":"address"}],"name":"getConvertibleTokenSmartTokens","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"_registry","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_smartToken","type":"address"}],"name":"SmartTokenAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_smartToken","type":"address"}],"name":"SmartTokenRemoved","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_liquidityPool","type":"address"}],"name":"LiquidityPoolAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_liquidityPool","type":"address"}],"name":"LiquidityPoolRemoved","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_convertibleToken","type":"address"},{"indexed":true,"name":"_smartToken","type":"address"}],"name":"ConvertibleTokenAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_convertibleToken","type":"address"},{"indexed":true,"name":"_smartToken","type":"address"}],"name":"ConvertibleTokenRemoved","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_prevOwner","type":"address"},{"indexed":true,"name":"_newOwner","type":"address"}],"name":"OwnerUpdate","type":"event"}]
             }
         },
-        /*afterDeploy: async (dependencies) => {
-            console.log(dependencies)
-            await dependencies.contracts.methods.ContractRegistry.registerAddress(web3.utils.fromAscii("ContractFeatures"), dependencies.contracts.ContractFeatures.address).send({
-                gas: 6000000
-            })
-            await dependencies.contracts.methods.ContractRegistry.registerAddress(web3.utils.fromAscii("BancorFormula"), dependencies.contracts.BancorFormula.address).send({
-                gas: 6000000
-            })
-            await dependencies.contracts.methods.ContractRegistry.registerAddress(web3.utils.fromAscii("BancorNetwork"), dependencies.contracts.BancorNetwork.address).send({
-                gas: 6000000
-            })
-            await dependencies.contracts.methods.ContractRegistry.registerAddress(web3.utils.fromAscii("BancorConverterFactory"), dependencies.contracts.BancorConverterFactory.address).send({
-                gas: 6000000
-            })
-            await dependencies.contracts.methods.ContractRegistry.registerAddress(web3.utils.fromAscii("BancorConverterUpgrader"), dependencies.contracts.BancorConverterUpgrader.address).send({
-                gas: 6000000
-            }),
-            await dependencies.contracts.methods.ContractRegistry.registerAddress(web3.utils.fromAscii("BancorConverterRegistryData"), dependencies.contracts.BancorConverterRegistryData.address).send({
-                gas: 6000000
-            })
-        },*/
-        // default environment, merges with the settings in default
-        // assumed to be the intended environment by `embark run`
         development: {
             deploy: {
 
@@ -231,7 +51,18 @@ module.exports = {
         },
         infura: {
             deploy: {
-
+                USDB: {
+                    address: '0x309627af60f0926daa6041b8279484312f2bf060',
+                    abiDefinition: [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"_name","type":"string"},{"name":"_symbol","type":"string"},{"name":"_decimals","type":"uint8"},{"name":"_totalSupply","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_owner","type":"address"},{"indexed":true,"name":"_spender","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Approval","type":"event"}]
+                  },
+                BNT: {
+                    address: '0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C',
+                    abiDefinition: [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_spender","type":"address"},{"name":"_value","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_value","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"},{"name":"","type":"address"}],"name":"allowance","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"_name","type":"string"},{"name":"_symbol","type":"string"},{"name":"_decimals","type":"uint8"},{"name":"_totalSupply","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_owner","type":"address"},{"indexed":true,"name":"_spender","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"Approval","type":"event"}]
+                },
+                BancorConverterRegistry: {
+            address:'0x52Ae12ABe5D8BD778BD5397F99cA900624CfADD4',
+            abiDefinition:[{"constant":false,"inputs":[{"name":"_adminOnly","type":"bool"}],"name":"restrictRegistryUpdate","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getSmartTokens","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_smartTokens","type":"address[]"}],"name":"getConvertersBySmartTokens","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_value","type":"address"}],"name":"isConvertibleToken","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_value","type":"address"}],"name":"isSmartToken","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"updateRegistry","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getConvertibleTokens","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"prevRegistry","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getConvertibleTokenCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_converter","type":"address"}],"name":"addConverter","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_convertibleToken","type":"address"},{"name":"_value","type":"address"}],"name":"isConvertibleTokenSmartToken","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"acceptOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getLiquidityPoolCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"registry","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getLiquidityPools","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_reserveTokens","type":"address[]"},{"name":"_reserveRatios","type":"uint256[]"}],"name":"getLiquidityPoolByReserveConfig","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_index","type":"uint256"}],"name":"getConvertibleToken","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_converter","type":"address"}],"name":"isConverterValid","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_converter","type":"address"}],"name":"removeConverter","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_index","type":"uint256"}],"name":"getSmartToken","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_convertibleToken","type":"address"}],"name":"getConvertibleTokenSmartTokenCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_index","type":"uint256"}],"name":"getLiquidityPool","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"restoreRegistry","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"adminOnly","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"newOwner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_convertibleToken","type":"address"},{"name":"_index","type":"uint256"}],"name":"getConvertibleTokenSmartToken","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getSmartTokenCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_value","type":"address"}],"name":"isLiquidityPool","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_convertibleToken","type":"address"}],"name":"getConvertibleTokenSmartTokens","outputs":[{"name":"","type":"address[]"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"_registry","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_smartToken","type":"address"}],"name":"SmartTokenAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_smartToken","type":"address"}],"name":"SmartTokenRemoved","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_liquidityPool","type":"address"}],"name":"LiquidityPoolAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_liquidityPool","type":"address"}],"name":"LiquidityPoolRemoved","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_convertibleToken","type":"address"},{"indexed":true,"name":"_smartToken","type":"address"}],"name":"ConvertibleTokenAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_convertibleToken","type":"address"},{"indexed":true,"name":"_smartToken","type":"address"}],"name":"ConvertibleTokenRemoved","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_prevOwner","type":"address"},{"indexed":true,"name":"_newOwner","type":"address"}],"name":"OwnerUpdate","type":"event"}]
+                }
             }
         },
         // merges with the settings in default

@@ -2,6 +2,7 @@
 node_modules
 /dist
 .embark
+/config/vars.env
 # local env files
 .env.local
 .env.*.local

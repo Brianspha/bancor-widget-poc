@@ -1,20 +1,58 @@
 <template>
-<v-container>
-    <v-form ref="form" v-model="valid" lazy-validation>
-        <v-select outlined v-model="selectedActions" :items="actions" :item-text="selectedActions" :rules="selectRules" label="Action" return-object required></v-select>
-        <v-select outlined v-model="selectedToken" :items="$store.state.tokens" item-text="symbol" item-value="symbol" :rules="selectRules" label="Token Name" required></v-select>
-        <v-text-field :label="currentPlaceHolder" :placeholder="currentPlaceHolder" v-model="tokenAmount" type="number" :rules="numberRules" outlined></v-text-field>
-        <v-text-field v-if="!$store.state.wallectConnected" class="headline" style="font-weight: bold; color:black;" v-modal="warningText" loading="error" :placeholder="warningText" outlined disabled></v-text-field>
-        <v-btn  :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" @click="validate">
-            {{buttonContent}}
-        </v-btn>
-        <v-icon :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor" @click="showInfo">
-            {{$store.state.defaultInfoIcon}}
-        </v-icon>
+  <v-container>
+    <v-form
+      ref="form"
+      v-model="valid"
+      lazy-validation
+    >
+      <v-select
+        outlined
+        v-model="selectedActions"
+        :items="actions"
+        :item-text="selectedActions"
+        :rules="selectRules"
+        label="Action"
+        return-object
+        required
+      />
+      <v-select
+        outlined
+        v-model="selectedToken"
+        :items="$store.state.tokens"
+        item-text="symbol"
+        item-value="symbol"
+        :rules="selectRules"
+        label="Token Name"
+        required
+      />
+      <v-text-field
+        :label="currentPlaceHolder"
+        :placeholder="currentPlaceHolder"
+        v-model="tokenAmount"
+        type="number"
+        :rules="numberRules"
+        outlined
+      />
+      <v-btn
+        :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor"
+        @click="validate"
+      >
+        {{ buttonContent }}
+      </v-btn>
+      <v-icon
+        :color="$root.widgetcolor? $root.widgetcolor:$store.state.defualtColor"
+        @click="showInfo"
+      >
+        {{ $store.state.defaultInfoIcon }}
+      </v-icon>
     </v-form>
-    <aboutLiquidityModal></aboutLiquidityModal>
-    <loading :active.sync="isLoading" :can-cancel="false" :is-full-page="true"></loading>
-</v-container>
+    <aboutLiquidityModal />
+    <loading
+      :active.sync="isLoading"
+      :can-cancel="false"
+      :is-full-page="true"
+    />
+  </v-container>
 </template>
 
 <script>
@@ -98,8 +136,10 @@ export default {
             this.isLoading = true
             var balance = await Promise.resolve(this.getUserBalance())
             console.log(`userBalance: ${balance}`)
+            balance = new bigNumber(balance)
             var amount = this.toWei(this.tokenAmount, this.token.decimals)
-            if (balance <= 0 || amount <= balance) {
+            amount = new bigNumber(amount)
+            if (balance.isLessThanOrEqualTo(0) || amount.isGreaterThanOrEqualTo(balance)) {
                 this.error(`Seems like you have an insuficient balance of: ${this.token.symbol}`)
                 this.isLoading = false
                 this.tokenAmount = 0
@@ -135,8 +175,9 @@ export default {
         },
         addLiquidity: async function () {
             var balance = await Promise.resolve(this.getUserBalance())
+            balance = new bigNumber(balance)
             this.tokenAmount = new bigNumber(this.tokenAmount).multipliedBy(new bigNumber(10).pow(new bigNumber(this.token.decimals))).toFixed()
-            if (balance >= this.tokenAmount) {
+            if (balance.isGreaterThanOrEqualTo(this.tokenAmount)) {
                 var contract = this.getReserveTokenContract()
                 console.log('this,tokenAmount: ', this.tokenAmount)
                 contract.methods.approve(this.token.converterAddress, this.tokenAmount).send({
@@ -160,21 +201,10 @@ export default {
             var contract = this.getConverterContract()
             contract.methods.fund(this.tokenAmount).send({
                 gas: this.$store.state.currentGas,
-                gasPrice: this.$store.state.gasPrice,
                 from: this.$store.state.web3.eth.defaultAccount
             }).then(async (receipt, error) => {
-                contract = this.getReserveTokenContract()
-                var totalSupply = await contract.methods.totalSupply().call({
-                    gas: this.$store.state.currentGas,
-                    gasPrice: this.$store.state.gasPrice,
-                    from: this.$store.state.web3.eth.defaultAccount
-                })
-                var balance = await Promise.resolve(this.getUserBalance())
-                balance = new bigNumber(balance)
-                totalSupply = new bigNumber(totalSupply)
-                const share = this.calculateUserPercent(balance, totalSupply)
                 if (receipt) {
-                    this.success(`Succesfully funded liqudity pool \n Your current share ${share} of ${this.token.relayTokensymbol} \n of the total ${this.totalSupply}`)
+                    this.success(`Succesfully funded liqudity pool `)
                 }
                 this.isLoading = false
             }).catch((error) => {
@@ -201,7 +231,7 @@ export default {
                 const smartToken = this.getReserveTokenContract()
                 let userBalance = await smartToken.methods.balanceOf(this.$store.state.web3.eth.defaultAccount).call()
                 // userBalance = this.$store.state.web3.utils.hexToNumber(userBalance._hex)
-                resolve(userBalance)
+                resolve(new bigNumber(userBalance).toFixed())
             })
 
         }

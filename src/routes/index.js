@@ -1,6 +1,4 @@
-import ExistingPools from '../components/UI/ExistingPools'
 import AddRemoveLiquidity from '../components/UI/AddRemoveLiquidity'
-import Conversions from '../components/UI/Conversions'
 import Create from '../components/UI/CreatePool'
 
 import vueRouter from 'vue-router'
@@ -18,16 +16,7 @@ export default new vueRouter({
             name: "AddRemove",
             component: AddRemoveLiquidity
         },
-        {
-            path: "/existing",
-            name: "Existing",
-            component: ExistingPools
-        },
-        {
-            path: "/conversions",
-            name: "Conversions",
-            component: Conversions
-        },
+     
         {
             path: "/create",
             name: "Create",
