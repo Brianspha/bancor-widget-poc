@@ -1,5 +1,6 @@
 # bancor-widget-poc
 
+### This is a work in progress
 
 
 
@@ -15,7 +16,7 @@ To do i will upload to npm later on in the day
 
 ### Vanilla Setup
 
-Copy the dist folder into your project and see [the example folder]()
+Copy the dist folder into your project and see [the example folder](https://github.com/Brianspha/bancor-widget-poc/tree/master/example)
 for how to use the widget
 
 ``` 
@@ -38,7 +39,6 @@ For color reference please look at the vuetify website [vuetify website](https:/
 
 At the moment creation addition of new bancor pools i.e. funding of liqudity pools is only restricted to official tokens this will change in the near future when i get more time, basically querying tokens from the subgraph
 
-### This is a work in progress
 ## Project setup
 ```
 npm install
