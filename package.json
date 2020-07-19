@@ -19,7 +19,7 @@
     "embark-remix": "0.0.2",
     "embarkjs": "^5.1.1",
     "embarkjs-web3": "^5.1.1",
-    "lodash": "^4.17.13",
+    "lodash": "^4.17.19",
     "moment": "^2.22.2",
     "request": "^2.88.2",
     "sweetalert2": "^9.7.2",
